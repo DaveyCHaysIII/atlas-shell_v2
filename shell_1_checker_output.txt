@@ -1,0 +1,109 @@
+EADME is present and not empty
+
+File is present
+
+Compile program
+
+Correct output - case: Execute cd without parameter
+
+Correct output - case: Remove $HOME and execute cd without parameter
+
+Correct output - case: Try to cd /root (without permission)
+
+Correct output - case: Remove OLDPWD and execute cd -
+
+Correct output - case: Cd to /tmp, then to dev and execute cd -
+
+Correct output - case: Execute cd /tmp
+
+Correct output - case: Try to cd /hbtn (Folder does not exist)
+
+Correct output - case: Set the variable OLDPWD to /tmp and execute cd -
+
+Correct output - case: Set $HOME to /tmp and execute cd without parameter
+
+Correct output - case: Echo the string Holberton
+
+Correct output - case: Spaces only (small)
+
+Correct output - case: Spaces only (large)
+
+Correct output - case: Spaces only (medium)
+
+Correct output - case: Remove all environment variables, except one, and execute env
+
+Correct output - case: Execute env
+
+Correct output - case: Remove all environment variables and execute env
+
+Correct output - case: Exit with the status 1000
+
+Correct output - case: Exit with the number 98 as parameter
+
+Correct output - case: Exit with a negative number
+
+Correct output - case: Execute a command that fails, and exit without parameter
+
+Correct output - case: Exit without parameter
+
+Correct output - case: Exit with a string as parameter
+
+Correct output - case: Execute ls
+
+Correct output - case: Copy the file /bin/ls to hbtn_ls (in the parent’s parent directory) and execute ./.././../hbtn_ls /var
+
+Correct output - case: Execute ls -l
+
+Correct output - case: Execute /bin/ls /var
+
+Correct output - case: Copy the file /bin/ls to hbtn_ls (in the parent directory) and execute ../hbtn_ls /var
+
+Correct output - case: Copy the file /bin/ls to hbtn_ls (in the parent’s parent directory) and execute ../../hbtn_ls /var
+
+Correct output - case: Copy the file /bin/ls to hbtn_ls (in the parent’s parent directory) and execute ./.././../////././hbtn_ls /var
+
+Correct output - case: Execute /bin/ls
+
+Correct output - case: ‘/bin’ is the last element of PATH, execute ls
+
+Correct output - case: Execute /bin/ls (surrounded by spaces) (large)
+
+Correct output - case: Remove the $PATH environment variable and execute /bin/ls
+
+Correct output - case: Execute /bin/ls -l
+
+Correct output - case: Execute both /bin/ls and ls several times with empty lines and leading and trailing spaces
+
+Correct output - case: Execute ls 4 times (with leading and trailing spaces)
+
+Correct output - case: Set PATH to be an empty string and execute ls
+
+Correct output - case: Execute /bin/ls 4 times (surrounded by spaces)
+
+Correct output - case: Copy the file /bin/ls to hbtn_ls (in the current directory) and execute ./hbtn_ls /var
+
+Correct output - case: Copy file /bin/ls to .hbtnls (in the current directory), change PATH to point to PWD and execute `.hbtnls /var`
+
+Correct output - case: Remove all environment variables and execute ls
+
+Correct output - case: ‘/bin’ is the first element of PATH, execute ls
+
+Correct output - case: Remove all environment variables and execute /bin/ls
+
+Correct output - case: Execute /bin/ls 3 times
+
+Correct output - case: Execute /bin/ls (surrounded by spaces) (medium)
+
+Correct output - case: Execute /bin/ls and ls several times
+
+Correct output - case: PATH does not contain ‘/bin’, execute ls
+
+Correct output - case: ‘/bin’ is in the middle of PATH, execute ls
+
+Correct output - case: Set PATH to be an empty string and execute a command that does not exist
+
+Correct output - case: Remove PATH variable and set a PATH1 variable, and execute ls
+
+Correct output - case: Copy the file /bin/ls to hbtn_ls (in the current directory), set the PATH to PWD, and execute hbtn_ls /var
+
+Correct output - case: fork should not be called when a command does not exist

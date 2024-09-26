@@ -19,8 +19,48 @@
 
 /****** STRUCTS ******/
 
+typedef struct MemNode {
+	char **commands;
+	char *buffer
+	struct MemNode *next;
+} MemNode;
+
 /****** PROTOTYPES ******/
 
 /* MAIN.C */
+
+int prompt(MemNode);
+int get_pipe_count(char *);
+int graceful_exit(MemNode);
+
+/* MEMNODE.C */
+
+MemNode createList();
+MemNode createNode(char**, char*);
+MemNode addNode(MemNode, char **, char *);
+void free_memlist(MemNode);
+
+/* EXEC_HANDLERS.C */
+
+void execute_command(MemNode);
+void execute_pipe_command(MemNode, int);
+
+/* PARSERS.C */
+
+//some kinda tokenizer
+//some kinda path validator
+//some kinda builtin handler
+
+/* BUILTINS.C */
+
+// exit
+// cd
+// env
+// setenv
+// unsetenv
+
+/* UTILS.C */
+
+//some kinda error handler
 
 #endif
