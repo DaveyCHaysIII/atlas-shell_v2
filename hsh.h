@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 /****** MACROS *******/
 
@@ -19,9 +20,10 @@
 
 /****** STRUCTS ******/
 
-typedef struct MemNode {
+typedef struct MemNode
+{
 	char **commands;
-	char *buffer
+	char *buffer;
 	struct MemNode *next;
 } MemNode;
 
@@ -29,27 +31,27 @@ typedef struct MemNode {
 
 /* MAIN.C */
 
-int prompt(MemNode);
+int prompt(MemNode *);
 int get_pipe_count(char *);
-int graceful_exit(MemNode);
+int graceful_exit(MemNode *);
 
 /* MEMNODE.C */
 
-MemNode createList();
-MemNode createNode(char**, char*);
-MemNode addNode(MemNode, char **, char *);
-void free_memlist(MemNode);
+MemNode *createList();
+MemNode *createNode(char **, char *);
+MemNode *addNode(MemNode *, char **, char *);
+void free_memlist(MemNode **);
 
 /* EXEC_HANDLERS.C */
 
-void execute_command(MemNode);
-void execute_pipe_command(MemNode, int);
+void execute_command(char *);
+void execute_pipe_command(MemNode *, int);
 
 /* PARSERS.C */
 
-//some kinda tokenizer
-//some kinda path validator
-//some kinda builtin handler
+// some kinda tokenizer
+// some kinda path validator
+// some kinda builtin handler
 
 /* BUILTINS.C */
 
@@ -61,6 +63,6 @@ void execute_pipe_command(MemNode, int);
 
 /* UTILS.C */
 
-//some kinda error handler
+// some kinda error handler
 
 #endif
