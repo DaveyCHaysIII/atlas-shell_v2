@@ -49,9 +49,9 @@ int main(int argc, char **argv, char **env)
 
 int prompt(MemNode data)
 {
-	//if isatty, print prompt
-	//command = getline(data->buffer, 0, STDIN);
-		
+	if (isatty)
+		printf("%s", PROMPT);
+			
 }
 
 /**
@@ -63,7 +63,19 @@ int prompt(MemNode data)
 
 int get_pipe_count(char *buffer)
 {
-	//finds match " | "
+	int i, pipes;
+
+	pipes = 0;
+	for (i = 1; buffer[i] != '\0'; i++)
+	{
+		if (buffer[i] == '|' &&
+		buffer[i - 1] == ' ' &&
+		buffer[i + 1] == ' ')
+		{
+			pipes++;
+		}
+	}
+	return (pipes);
 }
 
 /**
@@ -75,5 +87,7 @@ int get_pipe_count(char *buffer)
 
 int graceful_exit(MemNode data)
 {
-	
+	//error_handler();
+	//free_memlist(data);
+	//exit(0);
 }
