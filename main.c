@@ -98,9 +98,19 @@ int prompt(MemNode *data)
 
 int get_pipe_count(char *buffer)
 {
-	// finds match " | "
-	(void)buffer;
-	return (0);
+	int i, pipes;
+
+	pipes = 0;
+	for (i = 1; buffer[i] != '\0'; i++)
+	{
+		if (buffer[i] == '|' &&
+			buffer[i - 1] == ' ' &&
+			buffer[i + 1] == ' ')
+		{
+			pipes++;
+		}
+	}
+	return (pipes);
 }
 
 /**

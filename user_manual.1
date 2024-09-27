@@ -1,0 +1,74 @@
+.TH "HSH" 1 "September 2024" "Version 1.0" "HSH User Manual"
+.SH NAME
+HSH \- command interpreter
+.SH SYNOPSIS
+.B hsh
+.RI [ command ]
+.SH DESCRIPTION
+The shell is a command language interpreter that executes commands read from standard input or from 
+a file. It is the basic operation of a Unix-style operating system.
+.SH OPTIONS
+This shell does not support any specific command-line options at this time.
+.SH EXAMPLES
+.IP ./hsh
+This will start the hsh command shell.
+.SH SEE ALSO
+.BR bash (1),
+.BR sh (1)
+.LP
+.SH BUILTINS
+The shell provides a set of built-in commands that are executed directly by the shell without creati
+ng a new process. Examples include:
+.TP
+.B cd
+Change the current directory.
+.TP
+.B exit
+Exit the shell.
+.TP
+.B env
+Print the current environment
+.TP
+.B pwd
+Print the current directory
+.TP
+.B setenv
+Set an environment variable
+.TP
+.B unsetenv
+unset an environment variable
+
+.SH PIPELINES
+A pipeline is a sequence of one or more commands separated by the control operators `|`. The format 
+for a pipeline is:
+
+The standard output of \fBcommand1\fP is connected via a pipe to the standard input of \fBcommand2\f
+P. This connection occurs before any redirections specified by \fBcommand1\fP (see REDIRECTION below
+). If `|&` is used, \fBcommand1\fP's standard error, in addition to its standard output, is connecte
+d to \fBcommand2\fP's standard input through the pipe (shorthand for \fB2>&1 |\fP). This implicit re
+direction of standard error to standard output is performed after any redirections specified by \fBc
+ommand1\fP.
+
+.PP
+The return status of a pipeline is the exit status of the last command, unless the \fBpipefail\fP op
+tion is enabled. If \fBpipefail\fP is enabled, the pipeline's return status is the value of the last
+ (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully.
+
+.PP
+Each command in a multi-command pipeline is executed in a subshell, which is a separate process.
+
+.SH LISTS
+A list is a sequence of one or more pipelines separated by one of the operators `;`, `&`, `&&`, or `
+||`, and optionally terminated by one of `;`, `&`, or <newline>. Commands separated by `;` are execu
+ted sequentially; the shell waits for each command to terminate. The return status is the exit statu
+s of the last command executed.
+
+.SH HISTORY
+2024 - Originally written by Atlas School students:
+.PP
+Davey Hays <david.c.hays.iii@gmail.com> and Logan Wyatt <email@email.com>
+
+.SH AUTHOR
+Davey Hays <david.c.hays.iii@gmail.com>
+Logan Wyatt <email@email.com>
+
