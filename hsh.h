@@ -49,9 +49,15 @@ void execute_pipe_command(MemNode *, int);
 
 /* PARSERS.C */
 
+const char **parse_input(char *str_input, const char *delimiter);
 // some kinda tokenizer
 // some kinda path validator
 // some kinda builtin handler
+
+/* COUNTERS.C */
+
+int get_pipe_count(char *buffer);
+int count_redirects(const char **cmd_tokens);
 
 /* BUILTINS.C */
 
@@ -61,7 +67,7 @@ void execute_pipe_command(MemNode *, int);
 // setenv
 // unsetenv
 
-/* UTILS.C */
+/* UTILS.C */ // if needed
 
 // some kinda error handler
 

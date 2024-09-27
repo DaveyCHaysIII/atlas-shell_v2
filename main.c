@@ -18,7 +18,6 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	(void)pipes;
 
 	data = createList();
 	while (running)
@@ -28,22 +27,23 @@ int main(int argc, char **argv, char **env)
 		{
 			graceful_exit(data);
 		}
-		printf("%d\n", command);
-		printf("%s\n", data->buffer);
+		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
 		{
 			running = 0;
-			printf("%d", running);
+			printf("exiting\n"); // erase debug print
 			free_memlist(&data);
 			return (EXIT_SUCCESS);
 		}
-		// pipes = get_pipe_count(data->buffer);
-		// if (pipes == 0)
-		// {
-		// 	execute_command(data->buffer);
-		// 	free_memlist(data);
-		// 	continue;
-		// }
+		pipes = get_pipe_count(data->buffer);
+		printf("Number of pipes = %d\n", pipes); // erase debug print
+		if (pipes == 0)
+		{
+			printf("going to exe\n");
+			execute_command(data->buffer);
+			free_memlist(&data);
+			continue;
+		}
 		// else
 		// {
 		// 	execute_pipe_command(data, pipes);
@@ -87,30 +87,6 @@ int prompt(MemNode *data)
 		free(buff);
 	}
 	return (0);
-}
-
-/**
- * get_pipe_count - simple function to read number of pipe commands
- * @buffer: the buffer to parse over
- *
- * Return: number of pipes in command
- */
-
-int get_pipe_count(char *buffer)
-{
-	int i, pipes;
-
-	pipes = 0;
-	for (i = 1; buffer[i] != '\0'; i++)
-	{
-		if (buffer[i] == '|' &&
-			buffer[i - 1] == ' ' &&
-			buffer[i + 1] == ' ')
-		{
-			pipes++;
-		}
-	}
-	return (pipes);
 }
 
 /**
