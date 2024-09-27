@@ -1,0 +1,77 @@
+.TH SHELL 1 "25 March 2024" "Version 1.0" "Shell User Manual"
+.SH NAME
+Simple Shell \- command interpreter
+.SH SYNOPSIS
+.B shell
+.RI [ command_string ]
+.SH DESCRIPTION
+The shell is a command language interpreter that executes commands read from the standard input or from a file. This is the basic operation of a Unix-style operating system.
+.SH OPTIONS
+We have no single-character shell options as of this publication. Subject to change without notice. Does interpret a number of multi-character options. These options must appear on the command line before the single-character (if available) options to be recognized. Execute the command_string.
+.SH EXAMPLES
+.IP "shell \"echo Hello, World!\""
+This will print 'Hello, World!' to the console.
+.SH SEE ALSO
+.BR bash (1),
+.BR sh (1)
+.LP
+
+.RESERVED WORDS
+.PP
+Reserved words are words that have a special meaning to the shell. The following words are recognized as reserved when unquoted and either the first word of a command (see SHELL GRAMMAR below), the third word of a case or select command (only in is valid), or the third word of a for command (only in and do are valid):
+! case  coproc  do done elif else esac fi for function if in select then until while { } time [[ ]]
+
+.SH Simple Commands
+A simple command consists of optional variable assignments followed by blank-separated words and redirections. It is terminated by a control operator. The first word specifies the command to be executed (passed as argument zero), and the remaining words are passed as arguments to the invoked command.
+
+.PP
+The return value of a simple command is its exit status, or 128+n if the command is terminated by signal n.
+
+.SH Pipelines
+A pipeline is a sequence of one or more commands separated by the control operators | or |&. The format for a pipeline is:
+
+The standard output of command1 is connected via a pipe to the standard input of command2. This connection occurs before any redirections specified by command1 (see REDIRECTION below).
+If |& is used, command1's standard error, in addition to its standard output, is connected to command2's standard input through the pipe (shorthand for 2>&1 |). This implicit redirection of standard error to standard output is
+performed after any redirections specified by command1.
+
+.PP
+	The return status of a pipeline is the exit status of the last command, unless the pipefail option is enabled. If pipefail is enabled, the pipeline's return status is the value of the last (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully. If the reserved word ! precedes	a pipeline, the exit status of that pipeline is the logical negation of the exit status as described above. The shell waits	for all commands in the pipeline to terminate before returning a value.
+
+.PP
+	If the time reserved word precedes a pipeline, the elapsed as well as user and system time consumed by its execution are reported when the pipeline terminates.  The -p option changes the output format to that specified by POSIX.  When the shell is in posix mode, it does not recognize time as a reserved word if the next token begins with a `-'.  The TIMEFORMAT variable may be set to a format string that specifies how the timing information should be displayed; see the description of TIMEFORMAT under Shell Variables below.
+
+.PP
+       When the shell is in posix mode, time may be followed by a newline.  In this case, the shell displays the total user and system time consumed by the shell and its children. The TIMEFORMAT variable may be used to specify the format of the time information.
+
+.PP
+       Each command in a multi-command pipeline, where pipes are created, is executed in a subshell, which is a separate process.
+
+	   See COMMAND EXECUTION ENVIRONMENT for a description of subshells and a subshell environment.  If the lastpipe option is enabled using the shopt builtin, the last element of a pipeline may be run by the shell process when job control is not active.
+
+.LP Lists
+       A list is a sequence of one or more pipelines separated by one of the operators ;, &, &&, or ||, and optionally terminated by one of ;, &, or <newline>. Of these list operators, && and || have equal precedence, followed by ; and &, which have equal precedence.
+
+       A sequence of one or more newlines may appear in a list instead of a semicolon to delimit commands.
+
+       If a command is terminated by the control operator &, the shell executes the command in the background in a subshell.  The shell does not wait for the command to finish, and the return status is 0.  These are referred to as asynchronous commands.  Commands separated by a ; are executed sequentially; the shell waits for each command to terminate in turn.  The return status is the exit status of the last command executed. AND and OR lists are sequences of one or more pipelines separated by the && and || control operators, respectively.  AND and OR lists are executed with left associativity.  An AND list has the form
+.PP
+
+              command1 && command2 command2 is executed if, and only if, command1 returns an exit status of zero (success).
+
+    An OR list has the form
+.PP
+              command1 || command2 command2 is executed if, and only if, command1 returns a non-zero exit status.  The return status of AND and OR lists is the exit status of the last command executed in the list.
+
+.SH HISTORY
+    2024 - Originally written by Atlas School students
+    Davey Hays <david.c.hays.iii@gmail.com> and Chase Sparks <charles.sparks@atlasschool.com>
+
+    This was school project to help us better understand the skills and nature of Programming.
+    It's intended purpose was to give us a feel for all that goes into such projects.
+
+.SH BUGS
+Plenty of bugs, some unkown.
+
+.SH AUTHOR
+Davey Hays <david.c.hays.iii@gmail.com>
+Chase Sparks <charles.sparks@atlasschool.com>
