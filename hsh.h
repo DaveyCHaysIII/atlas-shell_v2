@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
 
 /****** MACROS *******/
 
@@ -27,12 +28,19 @@ typedef struct MemNode
 	struct MemNode *next;
 } MemNode;
 
+typedef struct Shellstate
+{
+	char **environ;
+	char *program_name;
+	//potentially other static variables
+} Shellstate;
+
 /****** PROTOTYPES ******/
 
 /* MAIN.C */
 
 int prompt(MemNode **);
-int graceful_exit(MemNode **);
+void graceful_exit(MemNode **, const char *, const char *)
 
 /* MEMNODE.C */
 
@@ -59,19 +67,22 @@ int count_redirects(const char **cmd_tokens);
 
 /* BUILTINS.C */
 
-void exit(MemNode **)
-// cd
-// pwd
+void print_env(void);
+void print_pwd(void);
+void _cd_handler (char **);
+void _cd(char *);
+void _echo(char *);
 
-/* UTILS.C */ // if needed
+/* UTILS.C */
 
-// some kinda error handler
+void error_handler(char *);
 
 /* ENVIRONMENT.C */
 
-//getenv()
-//setenv()
-//unsetenv()
-extern char **environ;
+char *_getenv(const char *);
+int _setenv(const char *, const char *);
+int _unsetenv(const char *);
+
+extern Shellstate shell_state;
 
 #endif
