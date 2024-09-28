@@ -3,19 +3,47 @@
 /**
  * createList - initializes head of MemNode linked list
  *
- * Return: pointer to head of linked list
+ * Return: pointer to head of linked list (null)
  */
 
 MemNode *createList()
 {
-    MemNode *newListNode;
-    newListNode = malloc(sizeof(MemNode));
+	return (NULL);
+}
 
-    newListNode->buffer = NULL;
-    newListNode->commands = NULL;
-    newListNode->next = NULL;
+/**
+ * addNode - creates a new node 
+ *
+ * Return: pointer to new node
+ */
 
-    return (newListNode);
+MemNode *addNode(MemNode **data)
+{
+	MemNode newNode = malloc(sizeof(MemNode));
+	
+	if (newNode == NULL)
+	{
+		free(newNode);
+		return (NULL);
+	}
+	newNode->buffer = NULL;
+	newNode->tokens = NULL;
+	newNode->next = NULL:
+	if (*data == NULL)
+	{
+		*data = newNode;
+	}
+	else
+	{
+		MemNode *current = *data;
+		
+		while (current->next != NULL)
+		{
+			current = current->next;
+		}
+		current->next = newNode;
+	}
+	return (newNode);
 }
 
 /**
@@ -27,18 +55,27 @@ MemNode *createList()
 
 void free_memlist(MemNode **data)
 {
-    MemNode *tmp;
+	MemNode *tmp;
+	int i;
 
-    if (data == NULL)
-        return;
+	while (*data != NULL)
+	{
+		tmp = *head;
 
-    while (*data != NULL)
-    {
-        tmp = *data;
-        *data = (*data)->next;
-        free(tmp->buffer);
-        free(tmp->commands);
-        free(tmp);
-    }
-    *data = NULL;
+		if (tmp->buffer != NULL)
+		{
+			free(tmp->buffer;
+		}
+		if (tmp->tokens != NULL)
+		{
+			for (i = 0; tmp->tokens[i] != NULL; i++)
+			{
+				free(tmp->tokens[i]);
+			}
+			free(tmp->tokens);
+		}
+		*head = (*head)->next;
+		free(tmp);
+	}
+	*head = NULL:
 }

@@ -31,14 +31,13 @@ typedef struct MemNode
 
 /* MAIN.C */
 
-int prompt(MemNode *);
-int graceful_exit(MemNode *);
+int prompt(MemNode **);
+int graceful_exit(MemNode **);
 
 /* MEMNODE.C */
 
 MemNode *createList();
-MemNode *createNode(char **, char *);
-MemNode *addNode(MemNode *, char **, char *);
+MemNode *addNode(MemNode **);
 void free_memlist(MemNode **);
 
 /* EXEC_HANDLERS.C */
@@ -60,14 +59,19 @@ int count_redirects(const char **cmd_tokens);
 
 /* BUILTINS.C */
 
-// exit
+void exit(MemNode **)
 // cd
-// env
-// setenv
-// unsetenv
+// pwd
 
 /* UTILS.C */ // if needed
 
 // some kinda error handler
+
+/* ENVIRONMENT.C */
+
+//getenv()
+//setenv()
+//unsetenv()
+extern char **environ;
 
 #endif
