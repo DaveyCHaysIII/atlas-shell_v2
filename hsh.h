@@ -32,7 +32,6 @@ typedef struct MemNode
 /* MAIN.C */
 
 int prompt(MemNode *);
-int get_pipe_count(char *);
 int graceful_exit(MemNode *);
 
 /* MEMNODE.C */
