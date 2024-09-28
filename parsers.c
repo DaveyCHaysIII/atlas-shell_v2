@@ -8,29 +8,70 @@
  * Return: matrix of tokens, otherwise NULL
  */
 
-const char **parse_input(char *str_input, const char *delimiter)
+parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
+						   const char *delimiter)
 {
-    const char **new_tok_arr = NULL;
-    char *tok = NULL;
-    int i = 0;
+	parsed_line_t *tmp, *newTok;
+	char *tok = NULL;
 
-    printf("in parser\n");
-    printf("buffer in parser = %s\n", str_input);
-    new_tok_arr = malloc(sizeof(char *));
-    if (!new_tok_arr)
-    {
-        free(new_tok_arr);
-        return (NULL);
-    }
-    tok = strtok(str_input, delimiter);
-    while (tok)
-    {
-        new_tok_arr[i] = strdup(tok);
-        tok = strtok(NULL, delimiter);
-        i++;
-    }
-    new_tok_arr[i] = '\0'; /* set final pointer to null*/
-    free(tok);
-    printf("exiting parser\n");
-    return (new_tok_arr);
+	printf("in parser\n");
+	printf("buffer in parser = %s\n", str_input);
+
+	tok = strtok(str_input, delimiter);
+	while (tok != NULL)
+	{
+		newTok = malloc(sizeof(parsed_line_t));
+		if (newTok == NULL)
+			return (NULL);
+		newTok->tok_val = strdup(tok);
+		if (newTok->tok_val == NULL)
+		{
+			free(tok);
+			free(newTok);
+			free_parsed_line(head);
+		}
+		newTok->next = NULL;
+
+		if (*head == NULL)
+			*head = newTok;
+		else
+		{
+			tmp = *head;
+			while (tmp->next != NULL)
+				tmp = tmp->next;
+			tmp->next = newTok;
+		}
+		tok = strtok(NULL, delimiter);
+	}
+
+	free(tok);
+	printf("exiting parser\n");
+	return (*head);
+}
+
+/**
+ * free_parsed_line - frees a linked list of a parsed str
+ * @head: beginning of linked list
+ *
+ * Return: n/a
+ */
+
+void free_parsed_line(parsed_line_t **head)
+{
+	parsed_line_t *tmp;
+
+	printf("freeing shit\n");
+	if (head == NULL)
+		return;
+	printf("here\n");
+	while (*head != NULL)
+	{
+		tmp = *head;
+		*head = (*head)->next;
+		printf("freeing tok_val\n");
+		free(tmp->tok_val);
+		printf("freeing list node\n");
+		free(tmp);
+	}
+	printf("freed shit\n");
 }

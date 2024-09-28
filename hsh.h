@@ -27,6 +27,12 @@ typedef struct MemNode
 	struct MemNode *next;
 } MemNode;
 
+typedef struct parsed_line_s
+{
+	char *tok_val;
+	struct parsed_line_s *next;
+} parsed_line_t;
+
 /****** PROTOTYPES ******/
 
 /* MAIN.C */
@@ -41,6 +47,7 @@ MemNode *createList();
 MemNode *createNode(char **, char *);
 MemNode *addNode(MemNode *, char **, char *);
 void free_memlist(MemNode **);
+void freematrix(char **matrix);
 
 /* EXEC_HANDLERS.C */
 
@@ -49,7 +56,9 @@ void execute_pipe_command(MemNode *, int);
 
 /* PARSERS.C */
 
-const char **parse_input(char *str_input, const char *delimiter);
+parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
+						   const char *delimiter);
+void free_parsed_line(parsed_line_t **head);
 // some kinda tokenizer
 // some kinda path validator
 // some kinda builtin handler
@@ -57,7 +66,7 @@ const char **parse_input(char *str_input, const char *delimiter);
 /* COUNTERS.C */
 
 int get_pipe_count(char *buffer);
-int count_redirects(const char **cmd_tokens);
+int count_redirects(char **cmd_tokens);
 
 /* BUILTINS.C */
 

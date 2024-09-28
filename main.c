@@ -41,8 +41,6 @@ int main(int argc, char **argv, char **env)
 		{
 			printf("going to exe\n");
 			execute_command(data->buffer);
-			free_memlist(&data);
-			continue;
 		}
 		// else
 		// {
@@ -50,6 +48,7 @@ int main(int argc, char **argv, char **env)
 		// 	free_memlist(data);
 		// 	continue;
 		// }
+		printf("moving on\n");
 		free(data->buffer);
 	}
 

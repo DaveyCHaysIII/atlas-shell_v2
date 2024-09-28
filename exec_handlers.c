@@ -9,13 +9,15 @@
 
 void execute_command(char *cmd_input)
 {
-	const char **cmd_tokens = NULL; // make a free func
-	int numRedirects = 0;
+	parsed_line_t *cmd_tokens; // make a free func
+	// int numRedirects = 0;
 
-	cmd_tokens = parse_input(cmd_input, WHITESPACE);
-	numRedirects = count_redirects(cmd_tokens);
-	printf("number redirects = %d\n", numRedirects);
-	freematrix(cmd_tokens);
+	cmd_tokens = parse_input(&cmd_tokens, cmd_input, WHITESPACE);
+	// // numRedirects = count_redirects(cmd_tokens);
+	// printf("number redirects = %d\n", numRedirects);
+	free_parsed_line(&cmd_tokens);
+
+	return;
 }
 
 /**
@@ -43,17 +45,5 @@ void exec_pipe_command(MemNode data, int num_pipes)
 		// else
 		// wait
 	}
-	return;
-}
-
-/**
- * freematrix - frees a matrix
- * @matrix: matrix to be freed
- *
- * Return: n/a
- */
-
-void freematrix(char **matrix)
-{
 	return;
 }

@@ -8,14 +8,14 @@
 
 MemNode *createList()
 {
-    MemNode *newListNode;
-    newListNode = malloc(sizeof(MemNode));
+	MemNode *newListNode;
+	newListNode = malloc(sizeof(MemNode));
 
-    newListNode->buffer = NULL;
-    newListNode->commands = NULL;
-    newListNode->next = NULL;
+	newListNode->buffer = NULL;
+	newListNode->commands = NULL;
+	newListNode->next = NULL;
 
-    return (newListNode);
+	return (newListNode);
 }
 
 /**
@@ -27,18 +27,18 @@ MemNode *createList()
 
 void free_memlist(MemNode **data)
 {
-    MemNode *tmp;
+	MemNode *tmp;
 
-    if (data == NULL)
-        return;
+	if (data == NULL)
+		return;
 
-    while (*data != NULL)
-    {
-        tmp = *data;
-        *data = (*data)->next;
-        free(tmp->buffer);
-        free(tmp->commands);
-        free(tmp);
-    }
-    *data = NULL;
+	while (*data != NULL)
+	{
+		tmp = *data;
+		*data = (*data)->next;
+		free(tmp->buffer);
+		free(tmp->commands);
+		free(tmp);
+	}
+	*data = NULL;
 }
