@@ -18,6 +18,7 @@ parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
 	printf("buffer in parser = %s\n", str_input);
 
 	tok = strtok(str_input, delimiter);
+	printf("%s\n", tok);
 	while (tok != NULL)
 	{
 		newTok = malloc(sizeof(parsed_line_t));
@@ -31,7 +32,7 @@ parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
 		// 	free_parsed_line(head);
 		// }
 		newTok->next = NULL;
-
+		printf("tok_val = %s\n", newTok->tok_val);
 		if (head == NULL)
 			*head = newTok;
 		else
