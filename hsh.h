@@ -91,6 +91,8 @@ void _echo(char *);
 /* UTILS.C */
 
 void error_handler(char *);
+unsigned int _strspn(char *, char *);
+char *create_sanitized_buffer(char *buffer);
 
 /* ENVIRONMENT.C */
 
