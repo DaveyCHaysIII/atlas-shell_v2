@@ -21,18 +21,32 @@
 
 /****** STRUCTS ******/
 
+/**
+ * struct MemNode - linked list for holding dynamic memory
+ * @tokens: the tokenized version of buffer
+ * @buffer: the buffer in question
+ * @next: the pointer to the next node in the list
+ *
+ * Description: This structure holds all dynamically allocated memory
+ */
 typedef struct MemNode
 {
-	char **commands;
+	char **tokens;
 	char *buffer;
 	struct MemNode *next;
 } MemNode;
 
+/**
+ * struct Shellstate - global variable holding structure
+ * @environ: holds the environmental varialbe
+ * @program_name: holds the program name
+ *
+ * Description: holds everything needed about the state of the shell
+ */
 typedef struct Shellstate
 {
 	char **environ;
 	char *program_name;
-	//potentially other static variables
 } Shellstate;
 
 /****** PROTOTYPES ******/
@@ -40,7 +54,7 @@ typedef struct Shellstate
 /* MAIN.C */
 
 int prompt(MemNode **);
-void graceful_exit(MemNode **, const char *, const char *)
+void graceful_exit(MemNode **, const char *, const char *);
 
 /* MEMNODE.C */
 

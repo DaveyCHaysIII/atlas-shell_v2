@@ -19,7 +19,7 @@ void error_handler(char *command)
 	{
 		return;
 	}
-	
+
 	fprintf(stderr, "%s: %d: %s: %s\n",
 		name,
 		errno,
