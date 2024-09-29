@@ -44,6 +44,11 @@ int _setenv(const char *name, const char *value)
 	char *new_var;
 	char **env;
 
+	if (name == NULL || value == NULL)
+	{
+		error_handler("setenv");
+		return (-1)
+	}
 	env = shell_state.environ;
 	name_len = strlen(name);
 	value_len = (value != NULL) ? strlen(value) : 0;
@@ -51,11 +56,6 @@ int _setenv(const char *name, const char *value)
 	if (new_var == NULL)
 	{
 		return (-1);
-	}
-
-	if (value != NULL)
-	{
-		sprintf(new_var, "%s=%s", name, value);
 	}
 	else
 	{

@@ -102,13 +102,19 @@ int prompt(MemNode *data)
 
 void graceful_exit(MemNode **data, const char *program, const char* code)
 {
-	if (code == NULL)
+	if ((code == NULL) || (strcmp(code, "0") == 0))
 	{
-		code = "0";
+		code = 0;
 	}
 	else
 	{
-		code = atoi(code);
+		num  = atoi(code);
+		if (num = 0)
+		{
+			program = "exit";
+			error_handler(program);
+			return;
+		}
 	}
 	if (code < 0)
 	{
