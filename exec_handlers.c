@@ -10,12 +10,12 @@
 void execute_command(char *cmd_input)
 {
 	parsed_line_t *cmd_tokens; // make a free func
-	// int numRedirects = 0;
+	int numRedirects = 0;
 
 	cmd_tokens = parse_input(&cmd_tokens, cmd_input, WHITESPACE);
-	// // numRedirects = count_redirects(cmd_tokens);
-	// printf("number redirects = %d\n", numRedirects);
-	free_parsed_line(&cmd_tokens);
+	numRedirects = count_redirects(cmd_tokens);
+	printf("number redirects = %d\n", numRedirects);
+	// free_parsed_line(&cmd_tokens);
 
 	return;
 }

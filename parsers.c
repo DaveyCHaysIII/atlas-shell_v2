@@ -24,15 +24,15 @@ parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
 		if (newTok == NULL)
 			return (NULL);
 		newTok->tok_val = strdup(tok);
-		if (newTok->tok_val == NULL)
-		{
-			free(tok);
-			free(newTok);
-			free_parsed_line(head);
-		}
+		// if (newTok->tok_val == NULL)
+		// {
+		// 	free(tok);
+		// 	free(newTok);
+		// 	free_parsed_line(head);
+		// }
 		newTok->next = NULL;
 
-		if (*head == NULL)
+		if (head == NULL)
 			*head = newTok;
 		else
 		{
@@ -59,6 +59,7 @@ parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
 void free_parsed_line(parsed_line_t **head)
 {
 	parsed_line_t *tmp;
+	(void)tmp;
 
 	printf("freeing shit\n");
 	if (head == NULL)

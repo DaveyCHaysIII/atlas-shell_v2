@@ -66,7 +66,7 @@ void free_parsed_line(parsed_line_t **head);
 /* COUNTERS.C */
 
 int get_pipe_count(char *buffer);
-int count_redirects(char **cmd_tokens);
+int count_redirects(parsed_line_t *cmd_tokens);
 
 /* BUILTINS.C */
 
