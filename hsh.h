@@ -79,6 +79,7 @@ const char **parse_input(char *str_input, const char *delimiter);
 
 int get_pipe_count(char *buffer);
 int count_redirects(const char **cmd_tokens);
+unsigned int _strlen(char *);
 
 /* BUILTINS.C */
 
@@ -105,9 +106,9 @@ extern Shellstate shell_state;
 /* STRINGS.C */
 
 char *_strdup(char *);
-char *_str_concat(char *, char *);
-unsigned int _strlen(char *);
+char *_str_char_concat(char *, char,  char *);
 char *_strstr(char *, char *);
 int _strcmp(char *, char *);
+int _strncmp(char*, char *, int);
 
 #endif

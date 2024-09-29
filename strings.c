@@ -45,7 +45,7 @@ char *_strdup(char *str)
  * Return: pointer to concatenated string!
  */
 
-char *_str_concat(char *s1, char *s2)
+char *_str_char_concat(char *s1, char a, char *s2)
 {
 	char *concat;
 	unsigned int k, l, len1, len2;
@@ -60,7 +60,7 @@ char *_str_concat(char *s1, char *s2)
 	}
 	len1 = _strlen(s1);
 	len2 = _strlen(s2);
-	concat = malloc(sizeof(char) * (len1 + len2 + 1));
+	concat = malloc(sizeof(char) * (len1 + len2 + 2));
 	if (concat == NULL)
 	{
 		return (NULL);
@@ -69,34 +69,17 @@ char *_str_concat(char *s1, char *s2)
 	{
 		concat[k] = s1[k];
 	}
+	concat[k++] = a;
 	for (l = 0; l < len2; l++)
 	{
-		concat[k] = s2[l];
-		k++;
+		concat[k++] = s2[l];
 	}
 	concat[k] = '\0';
 
 	return (concat);
 }
 
-/**
- * _strlen()- gives length of string
- * @str: string in question
- *
- * Return: length of string
- */
 
-unsigned int _strlen(char *str)
-{
-	unsigned int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
 
 /**
  * _strstr()- finds a string in another string
@@ -108,33 +91,22 @@ unsigned int _strlen(char *str)
 
 char *_strstr(char *haystack, char *needle)
 {
-	int i, j, count, len;
+	int i, j;
 
-	len = 55;
+	if (needle = '\0')
+		return (NULL);
+
 	for (i = 0; haystack[i] != '\0'; i++)
 	{
-		count = 0;
-		if (haystack[i] == needle[0])
+		if (haystack[i] == needle[i])
 		{
-			for (j = 0; needle[j] != '\0'; j++)
+			for (j = 0; needle[j] != '\0'; i++)
 			{
-				if (haystack[(i + j)] == needle[j])
-				{
-					count++;
-				}
-				if (needle[(j + 1)] == '\0')
-				{
-					len = j + 1;
-				}
+				if (haystack[i + j] != needle[j])
+					break;
 			}
-		}
-		if (needle[0] == '\0')
-		{
-			return (haystack);
-		}
-		if (count == len)
-		{
-			return (haystack + i);
+			if (needle[j] == '\0')
+				return ((char *)&haystack[i];
 		}
 	}
 	return (NULL);
@@ -150,40 +122,43 @@ char *_strstr(char *haystack, char *needle)
 
 int _strcmp(char *s1, char *s2)
 {
-	int sign, lens1, lens2, i, output;
+	int i;
 
-	i = 0;
-	sign = 1;
-	lens1 = 0;
-	lens2 = 0;
-	output = 0;
-	while (s1[lens1] != '\0')
-	{
-		lens1++;
-	}
-	while (s2[lens2] != '\0')
-	{
-		lens2++;
-	}
-	if (lens2 > lens1)
-	{
-		sign = -1;
-	}
-	for (i = 0; i < lens1; i++)
+	while (s1[i] != '\0' && s2[i] != '\0')
 	{
 		if (s1[i] != s2[i])
 		{
-			if (s1[i] < s2[i])
-			{
-				output = ((s1[i] - s2[i]) * sign);
-				break;
-			}
-			else
-			{
-				output = ((s2[i] - s1[i]) * sign);
-				break;
-			}
+			return (s1[i] - s2[i]);
+		}
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
+
+/**
+ * _strncmp()- works JUST like strncmp, compares two strings
+ * @s1: string 1
+ * @s2: string 2
+ * @n: number of bytes to check
+ *
+ * Return: int
+ */
+
+int _strncmp(char *s1, char *s2, int n)
+{
+	int i;
+
+	for (i = 0; i < n; i++)
+	{
+		if (s1[i] != s2[i])
+		{
+			return (s1[i] - s2[i]);
+		}
+
+		if ((s1[i] == '\0') || (s2[i] == '\0'))
+		{
+			return (0);
 		}
 	}
-	return (output);
+	return (0);
 }
