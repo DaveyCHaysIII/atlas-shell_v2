@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
 
 /****** MACROS *******/
 
@@ -20,12 +21,33 @@
 
 /****** STRUCTS ******/
 
+/**
+ * struct MemNode - linked list for holding dynamic memory
+ * @tokens: the tokenized version of buffer
+ * @buffer: the buffer in question
+ * @next: the pointer to the next node in the list
+ *
+ * Description: This structure holds all dynamically allocated memory
+ */
 typedef struct MemNode
 {
-	char **commands;
+	char **tokens;
 	char *buffer;
 	struct MemNode *next;
 } MemNode;
+
+/**
+ * struct Shellstate - global variable holding structure
+ * @environ: holds the environmental varialbe
+ * @program_name: holds the program name
+ *
+ * Description: holds everything needed about the state of the shell
+ */
+typedef struct Shellstate
+{
+	char **environ;
+	char *program_name;
+} Shellstate;
 
 typedef struct parsed_line_s
 {
@@ -37,9 +59,8 @@ typedef struct parsed_line_s
 
 /* MAIN.C */
 
-int prompt(MemNode *);
-int get_pipe_count(char *);
-int graceful_exit(MemNode *);
+int prompt(MemNode **);
+void graceful_exit(MemNode **, const char *, const char *);
 
 /* MEMNODE.C */
 
@@ -70,14 +91,22 @@ int count_redirects(parsed_line_t *cmd_tokens);
 
 /* BUILTINS.C */
 
-// exit
-// cd
-// env
-// setenv
-// unsetenv
+void print_env(void);
+void print_pwd(void);
+void _cd_handler(char **);
+void _cd(char *);
+void _echo(char *);
 
-/* UTILS.C */ // if needed
+/* UTILS.C */
 
-// some kinda error handler
+void error_handler(char *);
+
+/* ENVIRONMENT.C */
+
+char *_getenv(const char *);
+int _setenv(const char *, const char *);
+int _unsetenv(const char *);
+
+extern Shellstate shell_state;
 
 #endif

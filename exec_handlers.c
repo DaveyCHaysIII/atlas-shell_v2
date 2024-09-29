@@ -47,3 +47,15 @@ void exec_pipe_command(MemNode data, int num_pipes)
 	}
 	return;
 }
+
+/**
+ * freematrix - frees a matrix
+ * @matrix: matrix to be freed
+ *
+ * Return: n/a
+ */
+
+void freematrix(char **matrix)
+{
+	return;
+}

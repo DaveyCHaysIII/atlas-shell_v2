@@ -15,6 +15,8 @@ int main(int argc, char **argv, char **env)
 	MemNode *data;
 	int running = 1;
 
+	shell_state.environ = env;
+	shell_state.program_name = argv[0];
 	(void)argc;
 	(void)argv;
 	(void)env;
@@ -25,7 +27,7 @@ int main(int argc, char **argv, char **env)
 		command = prompt(data);
 		if (command == -1)
 		{
-			graceful_exit(data);
+			graceful_exit(*data);
 		}
 		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
@@ -89,15 +91,35 @@ int prompt(MemNode *data)
 }
 
 /**
- * graceful_exit - exits the program in a graceful manner
- * @data: the linked list holding all the data
+ * graceful_exit- exits the program
+ * @data: the list we need to free
+ * @program: the program that caused the exit
+ * @code: a string of a number or null
  *
- * Return: EXIT SUCCESS or EXIT FAILURE
+ * Return: no return
  */
 
-int graceful_exit(MemNode *data)
+void graceful_exit(MemNode **data, const char *program, const char* code)
 {
-	free_memlist(&data);
-	data = NULL;
-	return (0);
+	if (code == NULL)
+	{
+		code = "0";
+	}
+	else
+	{
+		code = atoi(code);
+	}
+	if (code < 0)
+	{
+		error_handler(program);
+		return;
+	}
+	else
+	{
+		free_memlist(&data);
+		error_handler(program);
+		code = code % 256;
+		exit(code);
+	}
 }
+

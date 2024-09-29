@@ -16,6 +16,43 @@ MemNode *createList()
 	newListNode->next = NULL;
 
 	return (newListNode);
+	return (NULL);
+}
+
+/**
+ * addNode - creates a new node
+ * @data: the list structure
+ *
+ * Return: pointer to new node
+ */
+
+MemNode *addNode(MemNode **data)
+{
+	MemNode newNode = malloc(sizeof(MemNode));
+
+	if (newNode == NULL)
+	{
+		free(newNode);
+		return (NULL);
+	}
+	newNode->buffer = NULL;
+	newNode->tokens = NULL;
+	newNode->next = NULL;
+	if (*data == NULL)
+	{
+		*data = newNode;
+	}
+	else
+	{
+		MemNode *current = *data;
+
+		while (current->next != NULL)
+		{
+			current = current->next;
+		}
+		current->next = newNode;
+	}
+	return (newNode);
 }
 
 /**
@@ -40,5 +77,5 @@ void free_memlist(MemNode **data)
 		free(tmp->commands);
 		free(tmp);
 	}
-	*data = NULL;
+	*head = NULL;
 }
