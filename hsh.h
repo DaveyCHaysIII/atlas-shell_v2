@@ -18,6 +18,7 @@
 #define WHITESPACE " \n\t\r"
 #define PATH_DELIM ":"
 #define BUFF_SIZE 1024
+#define MAX_ARR_SIZE 15
 
 /****** STRUCTS ******/
 
@@ -98,5 +99,13 @@ int _setenv(const char *, const char *);
 int _unsetenv(const char *);
 
 extern Shellstate shell_state;
+
+/* STRINGS.C */
+
+char *_strdup(char *);
+char *_str_concat(char *, char *);
+unsigned int _strlen(char *);
+char *_strstr(char *, char *);
+int _strcmp(char *, char *);
 
 #endif

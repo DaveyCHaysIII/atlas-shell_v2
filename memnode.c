@@ -20,15 +20,22 @@ MemNode *createList()
 
 MemNode *addNode(MemNode **data)
 {
-	MemNode newNode = malloc(sizeof(MemNode));
+	MemNode *newNode = malloc(sizeof(struct MemNode));
 
 	if (newNode == NULL)
+		return (NULL);
+
+	newNode->buffer = NULL;
+	newNode->tokens = malloc(sizeof(char *) * MAX_ARR_SIZE);
+	if (newNode->tokens == NULL)
 	{
 		free(newNode);
 		return (NULL);
 	}
-	newNode->buffer = NULL;
-	newNode->tokens = NULL;
+	for (int i = 0; i < MAX_ARR_SIZE; i++)
+	{
+		newNode->tokens[i] = NULL;
+	}
 	newNode->next = NULL;
 	if (*data == NULL)
 	{
