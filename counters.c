@@ -46,3 +46,22 @@ int count_redirects(parsed_line_t *head)
 	}
 	return (count);
 }
+
+/**
+ * _strlen()- gives length of string
+ * @str: string in question
+ *
+ * Return: length of string
+ */
+
+unsigned int _strlen(char *str)
+{
+	unsigned int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}

@@ -44,21 +44,21 @@ void _cd_handler(char **args)
 	if (_getenv("PWD") == NULL)
 	{
 		char cwd_directory[4096];
+
 		if (getcwd(cwd_directory, 4096) == NULL)
 		{
 			error_handler("cd");
 			return;
 		}
-		_setenv("PWD", cwd_directory);
+		if(_setenv("PWD", cwd_directory) == -1)
+			return;
 	}
 	current_directory = _getenv("PWD");
-
 	if ((args[0] != NULL) && (access(args[0], F_OK) != 0))
 	{
 		error_handler("cd");
 		return;
 	}
-
 	if ((args[0] == NULL) || (strcmp(args[0], "~") == 0))
 	{
 		if (_getenv("HOME") == NULL)
@@ -72,9 +72,7 @@ void _cd_handler(char **args)
 		_cd(_getenv("OLD_PWD"));
 	}
 	else
-	{
 		_cd(args[0]);
-	}
 }
 
 /**

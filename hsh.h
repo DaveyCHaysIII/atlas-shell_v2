@@ -18,6 +18,7 @@
 #define WHITESPACE " \n\t\r"
 #define PATH_DELIM ":"
 #define BUFF_SIZE 1024
+#define MAX_ARR_SIZE 15
 
 /****** STRUCTS ******/
 
@@ -87,7 +88,8 @@ void free_parsed_line(parsed_line_t **head);
 /* COUNTERS.C */
 
 int get_pipe_count(char *buffer);
-int count_redirects(parsed_line_t *cmd_tokens);
+int count_redirects(const char **cmd_tokens);
+unsigned int _strlen(char *);
 
 /* BUILTINS.C */
 
@@ -100,6 +102,8 @@ void _echo(char *);
 /* UTILS.C */
 
 void error_handler(char *);
+unsigned int _strspn(char *, char *);
+char *create_sanitized_buffer(char *buffer);
 
 /* ENVIRONMENT.C */
 
@@ -108,5 +112,13 @@ int _setenv(const char *, const char *);
 int _unsetenv(const char *);
 
 extern Shellstate shell_state;
+
+/* STRINGS.C */
+
+char *_strdup(char *);
+char *_str_char_concat(char *, char, char *);
+char *_strstr(char *, char *);
+int _strcmp(char *, char *);
+int _strncmp(char *, char *, int);
 
 #endif

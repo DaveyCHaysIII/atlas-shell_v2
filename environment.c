@@ -17,15 +17,7 @@ char *_getenv(const char *name)
 
 	for (i = 0; env[i] != NULL; i++)
 	{
-		char *eq = strchr(env[i], '=');
-
-		if (eq != NULL)
-		{
-			if (strncmp(env[i], name, eq - env[i]) == 0)
-			{
-				return (eq + 1);
-			}
-		}
+		// finish later
 	}
 	return (NULL);
 }
@@ -40,40 +32,32 @@ char *_getenv(const char *name)
 int _setenv(const char *name, const char *value)
 {
 	int i;
-	size_t name_len, value_len;
+	char tmp[1024];
 	char *new_var;
 	char **env;
 
-	env = shell_state.environ;
-	name_len = strlen(name);
-	value_len = (value != NULL) ? strlen(value) : 0;
-	new_var = malloc(name_len + value_len + 2);
-	if (new_var == NULL)
+	if (name == NULL || value == NULL)
 	{
+		error_handler("setenv");
 		return (-1);
 	}
+	new_var = _str_char_concat(name, '=', value);
 
-	if (value != NULL)
-	{
-		sprintf(new_var, "%s=%s", name, value);
-	}
-	else
-	{
-		sprintf(new_var, "%s=", name);
-	}
+	env = shell_state.environ;
 	for (i = 0; env[i] != NULL; i++)
 	{
-		if ((strcmp(env[i], name, name_len) == 0) &&
+		if ((strncmp(env[i], name, _strlen(name)) == 0) &&
 			(env[i][name_len] == '='))
 		{
-			free(env[i];
+			free(env[i]);
 			env[i] = new_var;
 			return (0);
 		}
 	}
-	env[i] = new_var;
-	env[i + 1] = NULL;
-	return (0);
+	// REALLOC section ??
+	// env[i] = new_var;
+	// env[i + 1] = NULL;
+	// return (0);
 }
 
 /**
@@ -86,6 +70,4 @@ int _unsetenv(const char *target)
 {
 	int i;
 	char **env = shell_state.environ;
-
-
 }
