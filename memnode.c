@@ -68,11 +68,11 @@ void free_memlist(MemNode **data)
 
 	while (*data != NULL)
 	{
-		tmp = *head;
+		tmp = *data;
 
 		if (tmp->buffer != NULL)
 		{
-			free(tmp->buffer;
+			free(tmp->buffer);
 		}
 		if (tmp->tokens != NULL)
 		{
@@ -82,8 +82,8 @@ void free_memlist(MemNode **data)
 			}
 			free(tmp->tokens);
 		}
-		*head = (*head)->next;
+		*data = (*data)->next;
 		free(tmp);
 	}
-	*head = NULL;
+	*data = NULL;
 }

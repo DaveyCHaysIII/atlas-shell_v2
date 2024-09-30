@@ -21,10 +21,10 @@ void error_handler(char *command)
 	}
 
 	fprintf(stderr, "%s: %d: %s: %s\n",
-		name,
-		errno,
-		command,
-		strerror(errno));
+			name,
+			errno,
+			command,
+			strerror(errno));
 }
 
 /**
@@ -58,7 +58,6 @@ unsigned int _strspn(char *s, char *accept)
 		{
 			return (i);
 		}
-
 	}
 	return (i);
 }
@@ -72,13 +71,13 @@ unsigned int _strspn(char *s, char *accept)
  * Return: pointer to dynamically allocated sanitized char *
  */
 
-char *create_sanitized_buffer(char *buffer);
+char *create_sanitized_buffer(char *buffer)
 {
 	size_t i, j, whitecount;
-	char tmp[1024]
+	char tmp[1024];
 	char *san_buffer;
 
-	i = _strspn(buffer, " \t\n"); //start of meaningful input
+	i = _strspn(buffer, " \t\n"); // start of meaningful input
 	j = 0;
 	whitecount = 0;
 	while (buffer[i] != '\0')
@@ -98,10 +97,10 @@ char *create_sanitized_buffer(char *buffer);
 			continue;
 		}
 
-		tmp[j++] = buffer[i]
+		tmp[j++] = buffer[i];
 		i++;
 	}
-	tmp[j] = '\0'
+	tmp[j] = '\0';
 
 	if (j = 0)
 		return (NULL);
@@ -110,4 +109,3 @@ char *create_sanitized_buffer(char *buffer);
 		return (NULL);
 	return san_buffer;
 }
-

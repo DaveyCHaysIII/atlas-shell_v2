@@ -27,7 +27,7 @@ int main(int argc, char **argv, char **env)
 		command = prompt(data);
 		if (command == -1)
 		{
-			graceful_exit(*data);
+			graceful_exit(&data, "main", ERROR_MALLOC);
 		}
 		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
@@ -55,7 +55,6 @@ int main(int argc, char **argv, char **env)
 		free(data->buffer);
 	}
 
-	graceful_exit(data);
 	return (EXIT_SUCCESS);
 }
 
@@ -100,7 +99,7 @@ int prompt(MemNode *data)
  * Return: no return
  */
 
-void graceful_exit(MemNode **data, const char *program, const char* code)
+void graceful_exit(MemNode **data, const char *program, const char *code)
 {
 	if ((code == NULL) || (strcmp(code, "0") == 0))
 	{
@@ -108,7 +107,8 @@ void graceful_exit(MemNode **data, const char *program, const char* code)
 	}
 	else
 	{
-		num  = atoi(code);
+		int num;
+		num = atoi(code);
 		if (num = 0)
 		{
 			program = "exit";
@@ -129,4 +129,3 @@ void graceful_exit(MemNode **data, const char *program, const char* code)
 		exit(code);
 	}
 }
-

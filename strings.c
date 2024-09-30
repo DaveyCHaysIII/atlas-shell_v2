@@ -79,8 +79,6 @@ char *_str_char_concat(char *s1, char a, char *s2)
 	return (concat);
 }
 
-
-
 /**
  * _strstr()- finds a string in another string
  * @haystack: the string in question
@@ -106,7 +104,7 @@ char *_strstr(char *haystack, char *needle)
 					break;
 			}
 			if (needle[j] == '\0')
-				return ((char *)&haystack[i];
+				return ((char *)&haystack[i]);
 		}
 	}
 	return (NULL);
