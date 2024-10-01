@@ -31,18 +31,16 @@ int get_pipe_count(char *buffer)
  * return: number of redirects, or -1 on failure
  */
 
-int count_redirects(parsed_line_t *head)
+int count_redirects(char **cmd_arr)
 {
-	parsed_line_t *tmp;
 	int count = 0;
+	int i;
 
 	printf("in count redirect\n");
-	tmp = head;
-	while (tmp->next != NULL)
+	for (i = 0; i < MAX_ARR_SIZE; i++)
 	{
-		if (strcmp(head->tok_val, ">") == 0)
+		if (strcmp(cmd_arr[i], ">") == 0)
 			count++;
-		tmp = tmp->next;
 	}
 	return (count);
 }

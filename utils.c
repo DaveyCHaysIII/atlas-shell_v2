@@ -7,7 +7,7 @@
  * Return: no return
  */
 
-void error_handler(char *command)
+void error_handler(const char *command)
 {
 	char *name = shell_state.program_name;
 

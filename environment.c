@@ -7,7 +7,7 @@
  * Return: value of that environment variable
  */
 
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
 	int i;
 	char **env = shell_state.environ;
@@ -29,9 +29,10 @@ char *_getenv(const char *name)
  *
  * Return: 0 on success, -1 on failure
  */
-int _setenv(const char *name, const char *value)
+int _setenv(char *name, char *value)
 {
 	int i;
+	int name_len;
 	char tmp[1024];
 	char *new_var;
 	char **env;
@@ -41,6 +42,7 @@ int _setenv(const char *name, const char *value)
 		error_handler("setenv");
 		return (-1);
 	}
+	name_len = _strlen(name);
 	new_var = _str_char_concat(name, '=', value);
 
 	env = shell_state.environ;
@@ -66,7 +68,7 @@ int _setenv(const char *name, const char *value)
  *
  * Return: 0 on success, -1 on failure
  */
-int _unsetenv(const char *target)
+int _unsetenv(char *target)
 {
 	int i;
 	char **env = shell_state.environ;

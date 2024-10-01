@@ -20,6 +20,10 @@
 #define BUFF_SIZE 1024
 #define MAX_ARR_SIZE 15
 
+/****** GLOBALS ******/
+
+extern char **environ;
+
 /****** STRUCTS ******/
 
 /**
@@ -50,24 +54,20 @@ typedef struct Shellstate
 	char *program_name;
 } Shellstate;
 
-typedef struct parsed_line_s
-{
-	char *tok_val;
-	struct parsed_line_s *next;
-} parsed_line_t;
+extern Shellstate shell_state;
 
 /****** PROTOTYPES ******/
 
 /* MAIN.C */
 
-int prompt(MemNode **);
+int prompt(MemNode *);
 void graceful_exit(MemNode **, const char *, const char *);
 
 /* MEMNODE.C */
 
 MemNode *createList();
 MemNode *createNode(char **, char *);
-MemNode *addNode(MemNode *, char **, char *);
+MemNode *addNode(MemNode **);
 void free_memlist(MemNode **);
 void freematrix(char **matrix);
 
@@ -78,9 +78,7 @@ void execute_pipe_command(MemNode *, int);
 
 /* PARSERS.C */
 
-parsed_line_t *parse_input(parsed_line_t **head, char *str_input,
-						   const char *delimiter);
-void free_parsed_line(parsed_line_t **head);
+char **parse_input(char *str_input, const char *delimiter);
 // some kinda tokenizer
 // some kinda path validator
 // some kinda builtin handler
@@ -88,7 +86,7 @@ void free_parsed_line(parsed_line_t **head);
 /* COUNTERS.C */
 
 int get_pipe_count(char *buffer);
-int count_redirects(const char **cmd_tokens);
+int count_redirects(char **cmd_tokens);
 unsigned int _strlen(char *);
 
 /* BUILTINS.C */
@@ -101,17 +99,15 @@ void _echo(char *);
 
 /* UTILS.C */
 
-void error_handler(char *);
+void error_handler(const char *);
 unsigned int _strspn(char *, char *);
 char *create_sanitized_buffer(char *buffer);
 
 /* ENVIRONMENT.C */
 
-char *_getenv(const char *);
-int _setenv(const char *, const char *);
-int _unsetenv(const char *);
-
-extern Shellstate shell_state;
+char *_getenv(char *);
+int _setenv(char *, char *);
+int _unsetenv(char *);
 
 /* STRINGS.C */
 

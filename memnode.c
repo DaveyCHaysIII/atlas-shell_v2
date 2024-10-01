@@ -12,7 +12,7 @@ MemNode *createList()
 	newListNode = malloc(sizeof(MemNode));
 
 	newListNode->buffer = NULL;
-	newListNode->commands = NULL;
+	newListNode->tokens = NULL;
 	newListNode->next = NULL;
 
 	return (newListNode);
@@ -29,6 +29,7 @@ MemNode *createList()
 MemNode *addNode(MemNode **data)
 {
 	MemNode *newNode = malloc(sizeof(struct MemNode));
+	int i;
 
 	if (newNode == NULL)
 		return (NULL);
@@ -40,7 +41,7 @@ MemNode *addNode(MemNode **data)
 		free(newNode);
 		return (NULL);
 	}
-	for (int i = 0; i < MAX_ARR_SIZE; i++)
+	for (i = 0; i < MAX_ARR_SIZE; i++)
 	{
 		newNode->tokens[i] = NULL;
 	}
@@ -86,6 +87,8 @@ void free_memlist(MemNode **data)
 		}
 		if (tmp->tokens != NULL)
 		{
+			int i;
+
 			for (i = 0; tmp->tokens[i] != NULL; i++)
 			{
 				free(tmp->tokens[i]);

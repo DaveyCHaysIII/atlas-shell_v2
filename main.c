@@ -1,5 +1,7 @@
 #include "hsh.h"
 
+Shellstate shell_state;
+
 /**
  * main - entrypoint for hsh executable
  * @argc: number of CL inputs
@@ -27,7 +29,7 @@ int main(int argc, char **argv, char **env)
 		command = prompt(data);
 		if (command == -1)
 		{
-			graceful_exit(&data, "main", ERROR_MALLOC);
+			graceful_exit(&data, "main", "0"); // Need fixing
 		}
 		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
@@ -100,14 +102,16 @@ int prompt(MemNode *data)
 
 void graceful_exit(MemNode **data, const char *program, const char *code)
 {
+	int num;
+
+	num = atoi(code);
+
 	if ((code == NULL) || (strcmp(code, "0") == 0))
 	{
 		code = 0;
 	}
 	else
 	{
-		int num;
-		num = atoi(code);
 		if (num = 0)
 		{
 			program = "exit";
@@ -122,9 +126,9 @@ void graceful_exit(MemNode **data, const char *program, const char *code)
 	}
 	else
 	{
-		free_memlist(&data);
+		free_memlist(data);
 		error_handler(program);
-		code = code % 256;
-		exit(code);
+		num = num % 256;
+		exit(num);
 	}
 }

@@ -50,7 +50,7 @@ void _cd_handler(char **args)
 			error_handler("cd");
 			return;
 		}
-		if(_setenv("PWD", cwd_directory) == -1)
+		if (_setenv("PWD", cwd_directory) == -1)
 			return;
 	}
 	current_directory = _getenv("PWD");
@@ -105,7 +105,7 @@ void _cd(char *new_directory)
  * Return: no return
  */
 
-void _echo(const char *message)
+void _echo(char *message)
 {
 	printf("%s\n", message);
 }
