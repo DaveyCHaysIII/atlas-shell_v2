@@ -1,23 +1,24 @@
 #include "hsh.h"
 
 /**
- * _getenv- gets an environment variable
- * @name: name of variable to get
+ * _getenv - gets an environment variable
+ * @name: name of variable to find
  *
- * Return: value of that environment variable
+ * Return: name=value
  */
 
-char *_getenv(char *name)
+char *_getenv(const char *name)
 {
+	char *env_var, *env_name, *env_val;
 	int i;
-	char **env = shell_state.environ;
 
-	if (name == NULL)
-		return (NULL);
-
-	for (i = 0; env[i] != NULL; i++)
+	for (i = 0; shell_state.environ[i] != NULL; i++)
 	{
-		// finish later
+		env_var = shell_state.environ[i];
+		env_name = strtok(env_var, "=");
+		env_val = strtok(NULL, "=");
+		if (strcmp(env_name, name) == 0)
+			return (strdup(env_val));
 	}
 	return (NULL);
 }

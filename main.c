@@ -19,6 +19,7 @@ int main(int argc, char **argv, char **env)
 
 	shell_state.environ = env;
 	shell_state.program_name = argv[0];
+	getpath(&shell_state.path);
 	(void)argc;
 	(void)argv;
 	(void)env;
@@ -34,10 +35,12 @@ int main(int argc, char **argv, char **env)
 		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
 		{
-			running = 0;
-			printf("exiting\n"); // erase debug print
-			free_memlist(&data);
-			return (EXIT_SUCCESS);
+			// running = 0;
+			// printf("exiting\n"); // erase debug print
+			// free_memlist(&data);
+			// freelist(&shell_state.path);
+			// return (EXIT_SUCCESS);
+			break;
 		}
 		pipes = get_pipe_count(data->buffer);
 		printf("Number of pipes = %d\n", pipes); // erase debug print
@@ -56,6 +59,8 @@ int main(int argc, char **argv, char **env)
 		free(data->buffer);
 	}
 
+	free_memlist(&data);
+	freelist(&shell_state.path);
 	return (EXIT_SUCCESS);
 }
 

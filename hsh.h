@@ -42,9 +42,26 @@ typedef struct MemNode
 } MemNode;
 
 /**
+ * struct path_s - linked list for holding path directories
+ * @dir: the directory path
+ * @next: the pointer to the next node in the list
+ *
+ * Description: This structure holds all path directories
+ * for the shell to search through
+ * when looking for a command
+ */
+
+typedef struct path_s
+{
+	char *dir;
+	struct path_s *next;
+} path_t;
+
+/**
  * struct Shellstate - global variable holding structure
  * @environ: holds the environmental varialbe
  * @program_name: holds the program name
+ * @path: holds the path directories
  *
  * Description: holds everything needed about the state of the shell
  */
@@ -52,6 +69,7 @@ typedef struct Shellstate
 {
 	char **environ;
 	char *program_name;
+	path_t *path;
 } Shellstate;
 
 extern Shellstate shell_state;
@@ -105,7 +123,7 @@ char *create_sanitized_buffer(char *buffer);
 
 /* ENVIRONMENT.C */
 
-char *_getenv(char *);
+char *_getenv(const char *name);
 int _setenv(char *, char *);
 int _unsetenv(char *);
 
@@ -116,5 +134,11 @@ char *_str_char_concat(char *, char, char *);
 char *_strstr(char *, char *);
 int _strcmp(char *, char *);
 int _strncmp(char *, char *, int);
+
+/* PATH_MANAGER.C */
+
+path_t *getpath(path_t **);
+void freelist(path_t **head);
+char *pathfinder(path_t *head, char *cmd);
 
 #endif
