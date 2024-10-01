@@ -11,27 +11,43 @@
 char **parse_input(char *str_input, const char *delimiter)
 {
 	char **tok_arr = NULL;
+	char *str_copy = NULL;
 	char *tok = NULL;
 	int i = 0;
 
-	printf("in parser\n");
-	printf("buffer in parser = %s\n", str_input);
+	if (!str_input || !delimiter)
+		return NULL;
+
+	str_copy = strdup(str_input); // Create a copy of the input string
+	if (!str_copy)
+		return NULL;
+
 	tok_arr = malloc(sizeof(char *) * MAX_ARR_SIZE);
 	if (!tok_arr)
 	{
-		free(tok_arr);
-		return (NULL);
+		free(str_copy);
+		return NULL;
 	}
-	tok = strtok(str_input, delimiter);
-	while (tok)
+
+	tok = strtok(str_copy, delimiter);
+	while (tok && i < MAX_ARR_SIZE - 1)
 	{
 		tok_arr[i] = strdup(tok);
+		if (!tok_arr[i])
+		{
+			// Handle memory allocation failure
+			for (int j = 0; j < i; j++)
+				free(tok_arr[j]);
+			free(tok_arr);
+			free(str_copy);
+			return NULL;
+		}
 		tok = strtok(NULL, delimiter);
 		i++;
 	}
 	for (; i < MAX_ARR_SIZE; i++)
-		tok_arr[i] = '\0'; /* set final pointer to null*/
-	free(tok);
-	printf("exiting parser\n");
-	return (tok_arr);
+		tok_arr[i] = NULL;
+
+	free(str_copy); // Free the copy of the input string
+	return tok_arr;
 }

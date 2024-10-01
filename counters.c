@@ -37,8 +37,9 @@ int count_redirects(char **cmd_arr)
 	int i;
 
 	printf("in count redirect\n");
-	for (i = 0; i < MAX_ARR_SIZE; i++)
+	for (i = 0; cmd_arr[i] != NULL; i++)
 	{
+		printf("cmd_arr[%d] = %s\n", i, cmd_arr[i]);
 		if (strcmp(cmd_arr[i], ">") == 0)
 			count++;
 	}

@@ -13,10 +13,12 @@
 void execute_command(char *cmd_input)
 {
 	char **cmd_arr;
-	int cmd_status = 0;
+	int cnt_redirects = 0;
 	pid_t pid;
 
-	cmd_arr = parse_input(cmd_input, WHITESPACE);
+	cmd_arr = parse_input(cmd_input, " ");
+	cnt_redirects = count_redirects(cmd_arr);
+	printf("cnt_redirects: %d\n", cnt_redirects);
 	cmd_arr[0] = pathfinder(shell_state.path, cmd_arr[0]);
 	if (cmd_arr[0] == NULL)
 	{
