@@ -45,37 +45,17 @@ void print_pwd(void)
 
 void _cd_handler(char **args)
 {
-	if (_getenv("PWD") == NULL)
+	if (args[1])
 	{
-		char cwd_directory[4096];
-
-		if (getcwd(cwd_directory, 4096) == NULL)
-		{
-			error_handler("cd");
-			return;
-		}
-		if (_setenv("PWD", cwd_directory) == -1)
-			return;
+		printf("You're about to cd to %s\n", args[1]);
 	}
-	if ((args[1] != NULL) && (access(args[0], F_OK) != 0))
+	else
+		printf("cd to nowhere!");
+	/*if(chdir(args[1]) != 0)
 	{
 		error_handler("cd");
 		return;
-	}
-	if ((args[1] == NULL) || (strcmp(args[1], "~") == 0))
-	{
-		if (_getenv("HOME") == NULL)
-			return;
-		_cd(_getenv("HOME"));
-	}
-	else if (strcmp(args[0], "-") == 0)
-	{
-		if (_getenv("OLD_PWD") == NULL)
-			return;
-		_cd(_getenv("OLD_PWD"));
-	}
-	else
-		_cd(args[0]);
+	}*/
 }
 
 /**

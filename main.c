@@ -30,6 +30,11 @@ int main(int argc, char **argv, char **env)
 			printf("\n");
 			graceful_exit(&data, "main", "0"); // Need fixing
 		}
+		else if (command == -2)
+		{
+			free_memlist(&data);
+			continue;
+		}
 		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
 		{
@@ -81,8 +86,14 @@ int prompt(MemNode *data)
 		return (-1);
 	}
 	buff[bytes_read - 1] = '\0';
-	data->buffer = strdup(buff);
+	//data->buffer = strdup(buff);
+	data->buffer = create_sanitized_buffer(buff);
+	if (data->buffer == NULL)
+	{
 		free(buff);
+		return (-2);
+	}
+	free(buff);
 
 	return (0);
 }
