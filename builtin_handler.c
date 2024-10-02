@@ -34,5 +34,13 @@ int builtin_handler(char **args)
 		//unsetenv
 		return (5);
 	}
+	if (_strcmp(args[0], "echo") == 0)
+	{
+		if (args[1])
+		{
+			_echo(args[1]);
+		}
+		return (6);
+	}
 	return (0);
 }

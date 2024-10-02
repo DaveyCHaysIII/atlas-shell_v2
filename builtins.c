@@ -91,5 +91,12 @@ void _cd(char *new_directory)
 
 void _echo(char *message)
 {
+	size_t len = _strlen(message);
+
+	if (len >= 2 && message[0] == '"' && message[len - 1] == '"')
+	{
+		message[len - 1] = '\0';
+		message++;
+	}
 	printf("%s\n", message);
 }
