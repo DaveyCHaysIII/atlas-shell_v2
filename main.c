@@ -20,13 +20,10 @@ int main(int argc, char **argv, char **env)
 	shell_state.environ = env;
 	shell_state.program_name = argv[0];
 	getpath(&shell_state.path);
-	(void)argc;
-	(void)argv;
-	(void)env;
 
-	data = createList();
 	while (running)
 	{
+		data = createList();
 		command = prompt(data);
 		if (command == -1)
 		{
@@ -56,7 +53,7 @@ int main(int argc, char **argv, char **env)
 		// 	continue;
 		// }
 		printf("moving on\n");
-		free(data->buffer);
+		free_memlist(&data);
 	}
 
 	free_memlist(&data);
@@ -73,26 +70,29 @@ int main(int argc, char **argv, char **env)
 
 int prompt(MemNode *data)
 {
-	// if isatty, print prompt
-	// command = getline(data->buffer, 0, STDIN);
+	char *buff = NULL;
+	size_t size = BUFF_SIZE;
+	int bytes_read = 0;
+
+	buff = malloc(sizeof(size));
+	if (buff == NULL)
+	{
+		return (-1);
+	}
 	if (isatty(STDIN_FILENO))
 	{
-		char *buff = NULL;
-		size_t size = BUFF_SIZE;
-		int bytes_read = 0;
-
-		buff = malloc(sizeof(size));
 		printf("%s > ", PROMPT);
-		bytes_read = getline(&buff, &size, stdin);
-		if (bytes_read < 0)
-		{
-			free(buff);
-			return (-1);
-		}
-		buff[bytes_read - 1] = '\0';
-		data->buffer = strdup(buff);
-		free(buff);
 	}
+	bytes_read = getline(&buff, &size, stdin);
+	if (bytes_read < 0)
+	{
+		free(buff);
+		return (-1);
+	}
+	buff[bytes_read - 1] = '\0';
+	data->buffer = strdup(buff);
+		free(buff);
+
 	return (0);
 }
 
@@ -113,18 +113,18 @@ void graceful_exit(MemNode **data, const char *program, const char *code)
 
 	if ((code == NULL) || (strcmp(code, "0") == 0))
 	{
-		code = 0;
+		num = 0;
 	}
 	else
 	{
-		if (num = 0)
+		if (num == 0)
 		{
 			program = "exit";
 			error_handler(program);
 			return;
 		}
 	}
-	if (code < 0)
+	if (num < 0)
 	{
 		error_handler(program);
 		return;

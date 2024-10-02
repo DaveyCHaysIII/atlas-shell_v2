@@ -102,7 +102,7 @@ char *create_sanitized_buffer(char *buffer)
 	}
 	tmp[j] = '\0';
 
-	if (j = 0)
+	if (j == 0)
 		return (NULL);
 	san_buffer = _strdup(tmp);
 	if (!san_buffer)

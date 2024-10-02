@@ -80,7 +80,7 @@ void exec_pipe_command(MemNode data, int num_pipes)
 
 void freematrix(char **matrix)
 {
-	int i = 0;
+	long unsigned int i = 0;
 
 	for (i = 0; i < sizeof(matrix); i++)
 		free(matrix[i]);

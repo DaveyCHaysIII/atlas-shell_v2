@@ -34,7 +34,6 @@ int _setenv(char *name, char *value)
 {
 	int i;
 	int name_len;
-	char tmp[1024];
 	char *new_var;
 	char **env;
 
@@ -60,7 +59,7 @@ int _setenv(char *name, char *value)
 	// REALLOC section ??
 	// env[i] = new_var;
 	// env[i + 1] = NULL;
-	// return (0);
+	return (0);
 }
 
 /**
@@ -71,6 +70,8 @@ int _setenv(char *name, char *value)
  */
 int _unsetenv(char *target)
 {
-	int i;
-	char **env = shell_state.environ;
+	//int i;
+	//char **env = shell_state.environ;
+	(void)target;
+	return (0);
 }

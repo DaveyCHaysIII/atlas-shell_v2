@@ -10,13 +10,15 @@ MemNode *createList()
 {
 	MemNode *newListNode;
 	newListNode = malloc(sizeof(MemNode));
-
+	if (newListNode == NULL)
+	{
+		return (NULL);
+	}
 	newListNode->buffer = NULL;
 	newListNode->tokens = NULL;
 	newListNode->next = NULL;
 
 	return (newListNode);
-	return (NULL);
 }
 
 /**

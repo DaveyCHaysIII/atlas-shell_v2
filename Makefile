@@ -1,4 +1,4 @@
-CFLAGS := -Wall -Werror -Wextra -pedantic
+CFLAGS := -Wall -Werror -Wextra -pedantic -g3
 
 NAME := hsh
 
@@ -14,7 +14,7 @@ $(NAME): $(OBJ)
 	$(CC) -o $@ $(OBJ)
 
 %.o: %.c
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ) $(NAME)

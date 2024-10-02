@@ -38,9 +38,6 @@ void print_pwd(void)
 
 void _cd_handler(char **args)
 {
-	char *current_directory;
-	char *new_directory;
-
 	if (_getenv("PWD") == NULL)
 	{
 		char cwd_directory[4096];
@@ -53,7 +50,6 @@ void _cd_handler(char **args)
 		if (_setenv("PWD", cwd_directory) == -1)
 			return;
 	}
-	current_directory = _getenv("PWD");
 	if ((args[0] != NULL) && (access(args[0], F_OK) != 0))
 	{
 		error_handler("cd");
