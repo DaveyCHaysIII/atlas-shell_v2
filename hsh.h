@@ -107,6 +107,10 @@ int get_pipe_count(char *buffer);
 int count_redirects(char **cmd_tokens);
 unsigned int _strlen(char *);
 
+/* BUILTIN_HANDLER.C */
+
+int builtin_handler(char **);
+
 /* BUILTINS.C */
 
 void print_env(void);
@@ -123,7 +127,7 @@ char *create_sanitized_buffer(char *buffer);
 
 /* ENVIRONMENT.C */
 
-char *_getenv(const char *name);
+char *_getenv(char *name);
 int _setenv(char *, char *);
 int _unsetenv(char *);
 

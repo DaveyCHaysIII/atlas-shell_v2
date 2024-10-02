@@ -17,6 +17,11 @@ void execute_command(char *cmd_input)
 	pid_t pid;
 
 	cmd_arr = parse_input(cmd_input, " ");
+	if (builtin_handler(cmd_arr) > 0)
+	{
+		freematrix(cmd_arr);
+		return;
+	}
 	cnt_redirects = count_redirects(cmd_arr);
 	printf("cnt_redirects: %d\n", cnt_redirects);
 	cmd_arr[0] = pathfinder(shell_state.path, cmd_arr[0]);

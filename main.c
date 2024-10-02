@@ -27,16 +27,12 @@ int main(int argc, char **argv, char **env)
 		command = prompt(data);
 		if (command == -1)
 		{
+			printf("\n");
 			graceful_exit(&data, "main", "0"); // Need fixing
 		}
 		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
 		{
-			// running = 0;
-			// printf("exiting\n"); // erase debug print
-			// free_memlist(&data);
-			// freelist(&shell_state.path);
-			// return (EXIT_SUCCESS);
 			break;
 		}
 		pipes = get_pipe_count(data->buffer);
@@ -44,14 +40,9 @@ int main(int argc, char **argv, char **env)
 		if (pipes == 0)
 		{
 			printf("going to exe\n");
+			//builtin check
 			execute_command(data->buffer);
 		}
-		// else
-		// {
-		// 	execute_pipe_command(data, pipes);
-		// 	free_memlist(data);
-		// 	continue;
-		// }
 		printf("moving on\n");
 		free_memlist(&data);
 	}

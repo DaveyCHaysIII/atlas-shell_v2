@@ -7,18 +7,28 @@
  * Return: name=value
  */
 
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
 	char *env_var, *env_name, *env_val;
 	int i;
 
 	for (i = 0; shell_state.environ[i] != NULL; i++)
 	{
-		env_var = shell_state.environ[i];
+		env_var = strdup(shell_state.environ[i]);
+		if (env_var == NULL)
+		{
+			return (NULL);
+		}
 		env_name = strtok(env_var, "=");
 		env_val = strtok(NULL, "=");
-		if (strcmp(env_name, name) == 0)
-			return (strdup(env_val));
+
+		if (_strcmp(env_name, name) == 0)
+		{
+			char *result = _strdup(env_val);
+			free(env_var);
+			return (result);
+		}
+		free(env_var);
 	}
 	return (NULL);
 }
@@ -56,9 +66,6 @@ int _setenv(char *name, char *value)
 			return (0);
 		}
 	}
-	// REALLOC section ??
-	// env[i] = new_var;
-	// env[i + 1] = NULL;
 	return (0);
 }
 

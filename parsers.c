@@ -28,7 +28,12 @@ char **parse_input(char *str_input, const char *delimiter)
 		free(str_copy);
 		return NULL;
 	}
-
+	while (tok_arr && i < MAX_ARR_SIZE)
+	{
+		tok_arr[i] = NULL;
+		i++;
+	}
+	i = 0;
 	tok = strtok(str_copy, delimiter);
 	while (tok && i < MAX_ARR_SIZE - 1)
 	{

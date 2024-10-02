@@ -25,6 +25,7 @@ void error_handler(const char *command)
 			errno,
 			command,
 			strerror(errno));
+	errno = 0;
 }
 
 /**

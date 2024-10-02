@@ -26,7 +26,14 @@ void print_env(void)
 
 void print_pwd(void)
 {
-	printf("%s\n", _getenv("PWD"));
+	char *result = _getenv("PWD");
+	if (result == NULL)
+	{
+		free(result);
+		return;
+ 	}
+	printf("%s\n", result);
+		free(result);
 }
 
 /**
@@ -50,12 +57,12 @@ void _cd_handler(char **args)
 		if (_setenv("PWD", cwd_directory) == -1)
 			return;
 	}
-	if ((args[0] != NULL) && (access(args[0], F_OK) != 0))
+	if ((args[1] != NULL) && (access(args[0], F_OK) != 0))
 	{
 		error_handler("cd");
 		return;
 	}
-	if ((args[0] == NULL) || (strcmp(args[0], "~") == 0))
+	if ((args[1] == NULL) || (strcmp(args[1], "~") == 0))
 	{
 		if (_getenv("HOME") == NULL)
 			return;
@@ -82,7 +89,7 @@ void _cd(char *new_directory)
 {
 	char *current_directory = _getenv("PWD");
 
-	_setenv("OLD_PWD", current_directory);
+	/*_setenv("OLD_PWD", current_directory);*/
 	if (chdir(new_directory) != 0)
 	{
 		error_handler("cd");
@@ -90,7 +97,8 @@ void _cd(char *new_directory)
 	}
 	else
 	{
-		_setenv("PWD", new_directory);
+		/*_setenv("PWD", new_directory);*/
+		return;
 	}
 }
 

@@ -111,6 +111,6 @@ char *pathfinder(path_t *head, char *cmd)
             tmp = tmp->next;
         }
     }
-    printf("%s: not found\n", cmd);
+    error_handler(cmd);
     return (cmd);
 }
