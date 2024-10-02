@@ -28,27 +28,22 @@ int main(int argc, char **argv, char **env)
 		if (command == -1)
 		{
 			printf("\n");
-			graceful_exit(&data, "main", "0"); // Need fixing
+			graceful_exit(&data, "main", "0");
 		}
 		else if (command == -2)
 		{
 			free_memlist(&data);
 			continue;
 		}
-		printf("getline buffer is : %s\n", data->buffer); // erase debug print
 		if (strcmp(data->buffer, "exit") == 0)
 		{
 			break;
 		}
 		pipes = get_pipe_count(data->buffer);
-		printf("Number of pipes = %d\n", pipes); // erase debug print
 		if (pipes == 0)
 		{
-			printf("going to exe\n");
-			//builtin check
 			execute_command(data->buffer);
 		}
-		printf("moving on\n");
 		free_memlist(&data);
 	}
 
@@ -86,7 +81,6 @@ int prompt(MemNode *data)
 		return (-1);
 	}
 	buff[bytes_read - 1] = '\0';
-	//data->buffer = strdup(buff);
 	data->buffer = create_sanitized_buffer(buff);
 	if (data->buffer == NULL)
 	{

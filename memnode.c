@@ -9,6 +9,7 @@
 MemNode *createList()
 {
 	MemNode *newListNode;
+
 	newListNode = malloc(sizeof(MemNode));
 	if (newListNode == NULL)
 	{

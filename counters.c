@@ -26,9 +26,9 @@ int get_pipe_count(char *buffer)
 
 /**
  * count_redirects - counts the number of redirects
- * @cmd_tokens: tokenized strings of CL input
+ * @cmd_arr: tokenized strings of CL input
  *
- * return: number of redirects, or -1 on failure
+ * Return: number of redirects, or -1 on failure
  */
 
 int count_redirects(char **cmd_arr)

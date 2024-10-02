@@ -26,12 +26,10 @@ int builtin_handler(char **args)
 	}
 	if (_strcmp(args[0], "setenv") == 0)
 	{
-		//setenv
 		return (4);
 	}
 	if (_strcmp(args[0], "unsetenv") == 0)
 	{
-		//unsetenv
 		return (5);
 	}
 	if (_strcmp(args[0], "echo") == 0)

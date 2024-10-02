@@ -27,11 +27,12 @@ void print_env(void)
 void print_pwd(void)
 {
 	char *result = _getenv("PWD");
+
 	if (result == NULL)
 	{
 		free(result);
 		return;
- 	}
+	}
 	printf("%s\n", result);
 		free(result);
 }
@@ -51,11 +52,6 @@ void _cd_handler(char **args)
 	}
 	else
 		printf("cd to nowhere!");
-	/*if(chdir(args[1]) != 0)
-	{
-		error_handler("cd");
-		return;
-	}*/
 }
 
 /**

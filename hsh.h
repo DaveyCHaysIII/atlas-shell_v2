@@ -97,9 +97,6 @@ void execute_pipe_command(MemNode *, int);
 /* PARSERS.C */
 
 char **parse_input(char *str_input, const char *delimiter);
-// some kinda tokenizer
-// some kinda path validator
-// some kinda builtin handler
 
 /* COUNTERS.C */
 

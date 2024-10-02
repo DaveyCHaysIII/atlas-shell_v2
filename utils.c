@@ -67,7 +67,7 @@ unsigned int _strspn(char *s, char *accept)
  * create_sanitized_buffer - creates a whitespace sanitized buffer
  * @buffer: the buffer that needs sanitizing
  *
- * Description: removes leading, trailing and excessive inter-argument whitespace
+ * Description: removes leading, trailing and inter-argument whitespace
  *
  * Return: pointer to dynamically allocated sanitized char *
  */
@@ -78,7 +78,7 @@ char *create_sanitized_buffer(char *buffer)
 	char tmp[1024];
 	char *san_buffer;
 
-	i = _strspn(buffer, " \t\n"); // start of meaningful input
+	i = _strspn(buffer, " \t\n");
 	j = 0;
 	whitecount = 0;
 	while (buffer[i] != '\0')
@@ -108,5 +108,5 @@ char *create_sanitized_buffer(char *buffer)
 	san_buffer = _strdup(tmp);
 	if (!san_buffer)
 		return (NULL);
-	return san_buffer;
+	return (san_buffer);
 }

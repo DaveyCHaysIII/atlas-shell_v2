@@ -38,8 +38,9 @@ char *_strdup(char *str)
 }
 
 /**
- * _str_concat()- concatenates!
+ * _str_char_concat()- concatenates!
  * @s1: string 1!
+ * @a: char!
  * @s2: string 2!
  *
  * Return: pointer to concatenated string!

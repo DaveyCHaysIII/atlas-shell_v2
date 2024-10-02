@@ -60,20 +60,6 @@ void exec_pipe_command(MemNode data, int num_pipes)
 {
 	(void)data;
 	(void)num_pipes;
-	// create pipes
-	//  for(int i = 0; i < pipes; i++)
-	{
-		// handle dup2
-		// dup2(pipefd[i], stdout);
-		// dup2(pipefd[i+1], stdin);
-		// fork
-		// if (pid = 0)
-		// input_parser()
-		// execute_command();
-		// else
-		// wait
-	}
-	return;
 }
 
 /**
@@ -85,10 +71,9 @@ void exec_pipe_command(MemNode data, int num_pipes)
 
 void freematrix(char **matrix)
 {
-	long unsigned int i = 0;
+	unsigned long int i = 0;
 
 	for (i = 0; i < sizeof(matrix); i++)
 		free(matrix[i]);
 	free(matrix);
-	return;
 }

@@ -14,7 +14,7 @@ char *_getenv(char *name)
 
 	for (i = 0; shell_state.environ[i] != NULL; i++)
 	{
-		env_var = strdup(shell_state.environ[i]);
+		env_var = _strdup(shell_state.environ[i]);
 		if (env_var == NULL)
 		{
 			return (NULL);
@@ -25,6 +25,7 @@ char *_getenv(char *name)
 		if (_strcmp(env_name, name) == 0)
 		{
 			char *result = _strdup(env_val);
+
 			free(env_var);
 			return (result);
 		}
@@ -35,7 +36,7 @@ char *_getenv(char *name)
 
 /**
  * _setenv - sets an environment variable
- * @target: the environment variable in question
+ * @name: the environment variable in question
  * @value: the value we want to set target to
  *
  * Return: 0 on success, -1 on failure
@@ -77,8 +78,6 @@ int _setenv(char *name, char *value)
  */
 int _unsetenv(char *target)
 {
-	//int i;
-	//char **env = shell_state.environ;
 	(void)target;
 	return (0);
 }
