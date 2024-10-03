@@ -44,29 +44,32 @@ char *_getenv(char *name)
 int _setenv(char *name, char *value)
 {
 	int i;
-	int name_len;
+	int name_len, value_len;
 	char *new_var;
-	char **env;
 
 	if (name == NULL || value == NULL)
 	{
 		error_handler("setenv");
 		return (-1);
 	}
-	name_len = _strlen(name);
-	new_var = _str_char_concat(name, '=', value);
 
-	env = shell_state.environ;
-	for (i = 0; env[i] != NULL; i++)
+	name_len = _strlen(name);
+	value_len = _strlen(value);
+
+	for (i = 0; shell_state.environ[i] != NULL; i++)
+		if (_strncmp(shell_state.environ[i], name, name_len) == 0)
+			break;
+	new_var = malloc(sizeof(char) * (name_len + value_len + 2));
+	new_var = _str_char_concat(name, '=', value);
+	if (shell_state.environ[i])
+		_strcpy(shell_state.environ[i], new_var);
+	else
 	{
-		if ((strncmp(env[i], name, _strlen(name)) == 0) &&
-			(env[i][name_len] == '='))
-		{
-			free(env[i]);
-			env[i] = new_var;
-			return (0);
-		}
+		printf("realloc has not been written for env\n");
+		return (-1);
 	}
+
+	free(new_var);
 	return (0);
 }
 

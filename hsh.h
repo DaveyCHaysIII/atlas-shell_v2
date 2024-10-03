@@ -113,7 +113,7 @@ int builtin_handler(char **);
 void print_env(void);
 void print_pwd(void);
 void _cd_handler(char **);
-void _cd(char *);
+void _cd_helper(char *);
 void _echo(char *);
 
 /* UTILS.C */
@@ -135,6 +135,10 @@ char *_str_char_concat(char *, char, char *);
 char *_strstr(char *, char *);
 int _strcmp(char *, char *);
 int _strncmp(char *, char *, int);
+
+/* STRINGS2.C */
+
+char *_strcpy(char *, char *);
 
 /* PATH_MANAGER.C */
 

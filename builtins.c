@@ -34,7 +34,7 @@ void print_pwd(void)
 		return;
 	}
 	printf("%s\n", result);
-		free(result);
+	free(result);
 }
 
 /**
@@ -46,36 +46,58 @@ void print_pwd(void)
 
 void _cd_handler(char **args)
 {
-	if (args[1])
+	static char *prev_dir;
+	char *home_dir = NULL;
+
+	if (!args[1]) /* cd with no args */
 	{
-		printf("You're about to cd to %s\n", args[1]);
+		home_dir = _getenv("HOME");
+		if (!home_dir)
+		{
+			printf("cd: HOME not set\n");
+			return;
+		}
+		prev_dir = _getenv("PWD");
+		_cd_helper(home_dir);
 	}
 	else
-		printf("cd to nowhere!");
+	{
+		if (_strcmp(args[1], "-") == 0)
+		{
+			if (!prev_dir)
+				return;
+			_cd_helper(prev_dir);
+		}
+		else
+		{
+			prev_dir = _getenv("PWD");
+			_cd_helper(args[1]);
+		}
+	}
 }
 
 /**
- * _cd - changes directory
- * @new_directory: the directory we're changing to
+ * _cd_helper - handles change directories
+ * @path: path to change to
  *
  * Return: no return
  */
 
-void _cd(char *new_directory)
+void _cd_helper(char *path)
 {
-	char *current_directory = _getenv("PWD");
+	/* check if path is a directory */
+	if (access(path, F_OK) == -1)
+	{
+		printf("cd: %s: No such file or directory\n", path);
+		return;
+	}
+	if (chdir(path) == -1)
+	{
+		printf("cd: %s: Permission denied\n", path);
+		return;
+	}
 
-	/*_setenv("OLD_PWD", current_directory);*/
-	if (chdir(new_directory) != 0)
-	{
-		error_handler("cd");
-		return;
-	}
-	else
-	{
-		/*_setenv("PWD", new_directory);*/
-		return;
-	}
+	_setenv("PWD", path);
 }
 
 /**
