@@ -57,8 +57,80 @@ void execute_command(char *cmd_input)
 
 void exec_pipe_command(MemNode data, int num_pipes)
 {
-	(void)data;
-	(void)num_pipes;
+	int i, j, pipefd[2 * num_pipes], status;
+	pid_t pid;
+	char *sanitized_buffer;
+
+	for (i = 0; i < num_pipes; i++)
+	{
+		if (pipe(pipe_fd + i * 2) == -1)
+		{
+			error_handler("pipe");
+			return;
+		}
+		data->tokens = parse_input(data->buffer, "|");
+		for(i = 0; i <= num_pipes; i++)
+		{
+			pid = fork();
+			if (pid == -1)
+			{
+				error_handler("fork");
+				return;
+			}
+			if (pid == 0)
+			{
+				if (i != 0)
+				{
+					if (dup2(pipefd[(i - 1) * 2], STDIN_FILENO) == -1)
+					{
+						error_handler("dup2");
+						return;
+					}
+
+				}
+				if (i != num_pipes)
+				{
+					if (dup2(pipefd[i * 2 + 1], STDOUT_FILENO) == -1)
+					{
+						error_handler("dup2");
+						return;
+					}
+				}
+				for (j = 0; j < 2 * num_pipes; j++)
+					close(pipefd[j]);
+
+				exec_command(data->tokens[i]);
+				error_handler(exec);
+				return;
+			}
+		}
+		for (i = 0; i < 2 * num_pipes; i++)
+			close(pipefd[i]);
+		for (i = 0; i <= num_pipes; i++)
+			wait(&status);
+	}
+}
+
+/**
+ * exec_;_command - executes multiple commands
+ * @data: the data node
+ *
+ * Return: no return
+ */
+
+void exec_;_command(MemNode *data)
+{
+	int i, status;
+	pid_t pid;
+	char **cmd_arr;
+	data->tokens = parse_input(data->buffer, ";");
+
+	i = 0;
+	while(data->tokens[i] != NULL)
+	{
+		execute_command(data->tokens[i]);
+		error_handler(data->tokens[i]);
+	}
 }
 
 /**
