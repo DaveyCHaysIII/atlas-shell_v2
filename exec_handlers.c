@@ -23,7 +23,6 @@ void execute_command(char *cmd_input)
 		return;
 	}
 	cnt_redirects = count_redirects(cmd_arr);
-	printf("cnt_redirects: %d\n", cnt_redirects);
 	cmd_arr[0] = pathfinder(shell_state.path, cmd_arr[0]);
 	if (cmd_arr[0] == NULL)
 	{
