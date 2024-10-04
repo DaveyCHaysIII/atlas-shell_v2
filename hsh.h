@@ -91,8 +91,11 @@ void freematrix(char **matrix);
 
 /* EXEC_HANDLERS.C */
 
+void execute_handler(MemNode *);
 void execute_command(char *);
-void execute_pipe_command(MemNode *, int);
+void execute_pipe_command(MemNode *);
+void execute_semi_command(MemNode *);
+void freematrix(char **);
 
 /* PARSERS.C */
 

@@ -13,7 +13,7 @@ Shellstate shell_state;
 
 int main(int argc, char **argv, char **env)
 {
-	int pipes, command;
+	int command;
 	MemNode *data;
 	int running = 1;
 	(void)argc;
@@ -40,12 +40,13 @@ int main(int argc, char **argv, char **env)
 		{
 			break;
 		}
-		pipes = get_pipe_count(data->buffer);
+		/*pipes = get_pipe_count(data->buffer);
 		if (pipes == 0)
 		{
 			printf("getline buffer is [%s]\n", data->buffer);
 			execute_command(data->buffer);
-		}
+		}*/
+		execute_handler(data);
 		free_memlist(&data);
 	}
 

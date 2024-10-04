@@ -4,6 +4,32 @@
 #include <sys/stat.h>
 
 /**
+ * execute_handler - handles execute commands
+ * @data: the memnode with the data
+ *
+ * Return: no return
+ */
+
+void execute_handler(MemNode *data)
+{
+	if (_strstr(data->buffer, " | ") != NULL)
+	{
+		printf("pipes!\n");
+		execute_pipe_command(data);
+	}
+	else if (_strstr(data->buffer, "; ") != NULL)
+	{
+		printf("semis!\n");
+		execute_semi_command(data);
+	}
+	else
+	{
+		execute_command(data->buffer);
+	}
+}
+
+
+/**
  * execute_command - executes CL input
  * @cmd_input: CL input to be executed
  *
@@ -48,15 +74,16 @@ void execute_command(char *cmd_input)
 }
 
 /**
- * exec_pipe_command - handles commands with pipes
+ * execute_pipe_command - handles commands with pipes
  * @data: the list holding all the data
  * @num_pipes: number of pipes
  *
  * Return: no return
  */
 
-void exec_pipe_command(MemNode *data, int num_pipes)
+void execute_pipe_command(MemNode *data)
 {
+	int num_pipes = get_pipe_count(data->buffer);
 	int i, j, pipefd[2 * num_pipes], status;
 	pid_t pid;
 
@@ -111,22 +138,29 @@ void exec_pipe_command(MemNode *data, int num_pipes)
 }
 
 /**
- * exec_semi_command - executes multiple commands
+ * execute_semi_command - executes multiple commands
  * @data: the data node
  *
  * Return: no return
  */
 
-void exec_semi_command(MemNode *data)
+void execute_semi_command(MemNode *data)
 {
 	int i;
+
 	data->tokens = parse_input(data->buffer, ";");
 
+	i = 0;
+	while (data->tokens[i] != NULL)
+	{
+		printf("semi-token %d: %s\n", i, data->tokens[i]);
+		i++;
+	}
 	i = 0;
 	while(data->tokens[i] != NULL)
 	{
 		execute_command(data->tokens[i]);
-		error_handler(data->tokens[i]);
+		i++;
 	}
 }
 
