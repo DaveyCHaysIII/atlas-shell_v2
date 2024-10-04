@@ -13,7 +13,7 @@
 void execute_command(char *cmd_input)
 {
 	char **cmd_arr;
-	int cnt_redirects = 0;
+	//int cnt_redirects = 0;
 	pid_t pid;
 
 	cmd_arr = parse_input(cmd_input, " ");
@@ -22,14 +22,14 @@ void execute_command(char *cmd_input)
 		freematrix(cmd_arr);
 		return;
 	}
-	cnt_redirects = count_redirects(cmd_arr);
+	//cnt_redirects = count_redirects(cmd_arr);
 	cmd_arr[0] = pathfinder(shell_state.path, cmd_arr[0]);
 	if (cmd_arr[0] == NULL)
 	{
 		freematrix(cmd_arr);
 		return;
 	}
-
+	printf("command: [%s]\n", cmd_arr[0]);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -55,15 +55,14 @@ void execute_command(char *cmd_input)
  * Return: no return
  */
 
-void exec_pipe_command(MemNode data, int num_pipes)
+void exec_pipe_command(MemNode *data, int num_pipes)
 {
 	int i, j, pipefd[2 * num_pipes], status;
 	pid_t pid;
-	char *sanitized_buffer;
 
 	for (i = 0; i < num_pipes; i++)
 	{
-		if (pipe(pipe_fd + i * 2) == -1)
+		if (pipe(pipefd + i * 2) == -1)
 		{
 			error_handler("pipe");
 			return;
@@ -99,8 +98,8 @@ void exec_pipe_command(MemNode data, int num_pipes)
 				for (j = 0; j < 2 * num_pipes; j++)
 					close(pipefd[j]);
 
-				exec_command(data->tokens[i]);
-				error_handler(exec);
+				execute_command(data->tokens[i]);
+				error_handler("exec");
 				return;
 			}
 		}
@@ -112,17 +111,15 @@ void exec_pipe_command(MemNode data, int num_pipes)
 }
 
 /**
- * exec_;_command - executes multiple commands
+ * exec_semi_command - executes multiple commands
  * @data: the data node
  *
  * Return: no return
  */
 
-void exec_;_command(MemNode *data)
+void exec_semi_command(MemNode *data)
 {
-	int i, status;
-	pid_t pid;
-	char **cmd_arr;
+	int i;
 	data->tokens = parse_input(data->buffer, ";");
 
 	i = 0;

@@ -41,8 +41,8 @@ path_t *getpath(path_t **head)
 			while (tmp->next != NULL)
 			{
 				tmp = tmp->next;
-				tmp->next = newNode;
 			}
+			tmp->next = newNode;
 		}
 		token = strtok(NULL, ":");
 	}

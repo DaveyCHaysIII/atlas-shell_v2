@@ -16,6 +16,7 @@ int main(int argc, char **argv, char **env)
 	int pipes, command;
 	MemNode *data;
 	int running = 1;
+	(void)argc;
 
 	shell_state.environ = env;
 	shell_state.program_name = argv[0];
@@ -42,6 +43,7 @@ int main(int argc, char **argv, char **env)
 		pipes = get_pipe_count(data->buffer);
 		if (pipes == 0)
 		{
+			printf("getline buffer is [%s]\n", data->buffer);
 			execute_command(data->buffer);
 		}
 		free_memlist(&data);
