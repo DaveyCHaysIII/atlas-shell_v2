@@ -14,12 +14,10 @@ void execute_handler(MemNode *data)
 {
 	if (_strstr(data->buffer, " | ") != NULL)
 	{
-		printf("pipes!\n");
 		execute_pipe_command(data);
 	}
 	else if (_strstr(data->buffer, "; ") != NULL)
 	{
-		printf("semis!\n");
 		execute_semi_command(data);
 	}
 	else
@@ -55,7 +53,6 @@ void execute_command(char *cmd_input)
 		freematrix(cmd_arr);
 		return;
 	}
-	printf("command: [%s]\n", cmd_arr[0]);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -64,6 +61,7 @@ void execute_command(char *cmd_input)
 			if (execve(cmd_arr[0], cmd_arr, shell_state.environ) != 0)
 			{
 				freematrix(cmd_arr);
+				error_handler(cmd_arr[0]);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -111,7 +109,7 @@ void execute_pipe_command(MemNode *data)
 				if (dup2(pipefd[(i - 1) * 2], STDIN_FILENO) == -1)
 				{
 					error_handler("dup2");
-					return;
+					exit(EXIT_FAILURE);
 				}
 
 			}
@@ -120,19 +118,21 @@ void execute_pipe_command(MemNode *data)
 				if (dup2(pipefd[i * 2 + 1], STDOUT_FILENO) == -1)
 				{
 					error_handler("dup2");
-					return;
+					exit(EXIT_FAILURE);
 				}
 			}
 			for (j = 0; j < 2 * num_pipes; j++)
+			{
 				close(pipefd[j]);
-
+			}
 			execute_command(data->tokens[i]);
-			error_handler("exec");
-			return;
+			exit(EXIT_SUCCESS);
 		}
 	}
 	for (i = 0; i < 2 * num_pipes; i++)
+	{
 		close(pipefd[i]);
+	}
 	for (i = 0; i <= num_pipes; i++)
 	{
 		if (wait(&status) == -1)
