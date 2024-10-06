@@ -95,11 +95,13 @@ void execute_handler(MemNode *);
 void execute_command(char *);
 void execute_pipe_command(MemNode *);
 void execute_semi_command(MemNode *);
+void simple_execute(char **);
 void freematrix(char **);
 
 /* PARSERS.C */
 
 char **parse_input(char *str_input, const char *delimiter);
+char **get_cmd_arr(char **, int);
 
 /* COUNTERS.C */
 
@@ -148,5 +150,12 @@ char *_strcpy(char *, char *);
 path_t *getpath(path_t **);
 void freelist(path_t **head);
 char *pathfinder(path_t *head, char *cmd);
+
+/* REDIRECTS.C */
+void redirect_handler(char **, int);
+void single_right_redirect(char **, char *);
+void double_right_redirect(char **, char *);
+void single_left_redirect(char **, char *);
+void double_left_redirect(char **, char *);
 
 #endif

@@ -49,3 +49,30 @@ char **parse_input(char *str_input, const char *delimiter)
 	free(str_copy);
 	return (tok_arr);
 }
+
+/**
+ * get_cmd_arr - gets just the commands in redirect inputs
+ * @tok_strs: tokenized strings
+ * @pos: position of redirection
+ *
+ * Return: array of commands
+ */
+
+char **get_cmd_arr(char **tok_strs, int pos)
+{
+	char **cmd_arr = NULL;
+	int i = 0;
+
+	if (!tok_strs || pos < 0)
+		return (NULL);
+
+	cmd_arr = malloc(sizeof(char *) * MAX_ARR_SIZE);
+	if (!cmd_arr)
+		return (NULL);
+
+	for (i = 0; i < pos; i++)
+	{
+		cmd_arr[i] = strdup(tok_strs[i]);
+	}
+	return (cmd_arr);
+}

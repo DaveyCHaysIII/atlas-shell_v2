@@ -26,7 +26,6 @@ void execute_handler(MemNode *data)
 	}
 }
 
-
 /**
  * execute_command - executes CL input
  * @cmd_input: CL input to be executed
@@ -37,7 +36,7 @@ void execute_handler(MemNode *data)
 void execute_command(char *cmd_input)
 {
 	char **cmd_arr;
-	//int cnt_redirects = 0;
+	int cnt_redirects = 0;
 	pid_t pid;
 
 	cmd_arr = parse_input(cmd_input, " ");
@@ -46,13 +45,20 @@ void execute_command(char *cmd_input)
 		freematrix(cmd_arr);
 		return;
 	}
-	//cnt_redirects = count_redirects(cmd_arr);
+	cnt_redirects = count_redirects(cmd_arr);
 	cmd_arr[0] = pathfinder(shell_state.path, cmd_arr[0]);
 	if (cmd_arr[0] == NULL)
 	{
 		freematrix(cmd_arr);
 		return;
 	}
+	if (cnt_redirects > 0)
+	{
+		redirect_handler(cmd_arr, cnt_redirects);
+		freematrix(cmd_arr);
+		return;
+	}
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -94,7 +100,7 @@ void execute_pipe_command(MemNode *data)
 		}
 	}
 	data->tokens = parse_input(data->buffer, "|");
-	for(i = 0; i <= num_pipes; i++)
+	for (i = 0; i <= num_pipes; i++)
 	{
 		pid = fork();
 		if (pid == -1)
@@ -111,7 +117,6 @@ void execute_pipe_command(MemNode *data)
 					error_handler("dup2");
 					exit(EXIT_FAILURE);
 				}
-
 			}
 			if (i != num_pipes)
 			{
@@ -160,7 +165,7 @@ void execute_semi_command(MemNode *data)
 		i++;
 	}
 	i = 0;
-	while(data->tokens[i] != NULL)
+	while (data->tokens[i] != NULL)
 	{
 		execute_command(data->tokens[i]);
 		i++;
