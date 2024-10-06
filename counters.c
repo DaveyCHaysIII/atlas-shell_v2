@@ -38,7 +38,10 @@ int count_redirects(char **cmd_arr)
 
 	for (i = 0; cmd_arr[i] != NULL; i++)
 	{
-		if (strcmp(cmd_arr[i], ">") == 0)
+		if (_strcmp(cmd_arr[i], ">") == 0 ||
+			_strcmp(cmd_arr[i], ">>") == 0 ||
+			_strcmp(cmd_arr[i], "<") == 0 ||
+			_strcmp(cmd_arr[i], "<<") == 0)
 			count++;
 	}
 	return (count);
